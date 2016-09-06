@@ -42,6 +42,7 @@ deps:
 	@echo "==> Install dependencies for $(PACKAGE) ..."; \
 	$(GO_DEPS) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
 
+# TODO: add all file for remove and run in a new base
 fclean:
 	@echo "==> Clean $(PACKAGE) ..."; \
 	$(GO_CLEAN) $(TOP_PACKAGE_DIR)/$(PACKAGE); \
@@ -63,7 +64,7 @@ lint: clean
 	@echo "==> Lint $(PACKAGE) ..."; \
 	$(GO_LINT) ./...;
 
-publish: fmt lint vet generate build clean
+publish: fmt lint vet generate build fclean
 	@echo "==> Publish $(PACKAGE) ..."; \
 	git add $(FILE);
 	@read -ep "Commit message: " MESSAGE; \
