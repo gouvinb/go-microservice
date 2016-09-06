@@ -1,0 +1,32 @@
+{
+	"Database": {
+		"Type": "Bolt",
+		"Name": "go-microservice",
+		"Bolt-directory": "./",
+		"URL": "127.0.0.1",
+		"Username": "",
+		"Password": "",
+		"Port": -1,
+		"MySQL-parameter": "?parseTime=true"
+	},
+	"Server": {
+		"Hostname": "",
+		"UseHTTP": true,
+		"UseHTTPS": false,
+		"HTTPPort": 8000,
+		"HTTPSPort": 443,
+		"CertFile": "",
+		"KeyFile": ""
+	},
+	"Session": {
+		"SecretKey": "go-microservice-secret-key",
+		"Name": "go-microservice",
+		"Options": {
+			"Path": "/",
+			"Domain": "",
+			"MaxAge": 28800,
+			"Secure": false,
+			"HttpOnly": true
+		}
+	}
+}
