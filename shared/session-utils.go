@@ -16,6 +16,8 @@ var (
 	flagOptionHTTPOnly = flag.Bool("session-option-disable-http-only", true, "disable HTTP only")
 )
 
+// TODO: replace defaults returns with your defaults configurations
+
 func GetSessionSecretKey(s Session) string {
 	if *flagSecretKey != "" {
 		return *flagSecretKey
@@ -23,11 +25,10 @@ func GetSessionSecretKey(s Session) string {
 		return os.Getenv("SESSION_SECRET_KEY")
 	} else if s.SecretKey != "" {
 		return s.SecretKey
-	} else {
-		return "go-microservice-secret-key-default"
 	}
-
+	return "go-microservice-secret-key-default"
 }
+
 func GetSessionName(s Session) string {
 	if *flagSessionName != "" {
 		return *flagSessionName
@@ -35,9 +36,8 @@ func GetSessionName(s Session) string {
 		return os.Getenv("SESSION_NAME")
 	} else if s.Name != "" {
 		return s.Name
-	} else {
-		return "go-microservice-default"
 	}
+	return "go-microservice-default"
 }
 
 func GetSessionOptionPath(s Session) string {
@@ -47,9 +47,8 @@ func GetSessionOptionPath(s Session) string {
 		return os.Getenv("SESSION_OPTION_PATH")
 	} else if s.Options.Path != "" {
 		return s.Options.Path
-	} else {
-		return "/"
 	}
+	return "/"
 }
 
 func GetSessionOptionDomain(s Session) string {
@@ -59,9 +58,8 @@ func GetSessionOptionDomain(s Session) string {
 		return os.Getenv("SESSION_OPTION_DOMAIN")
 	} else if s.Options.Domain != "" {
 		return s.Options.Domain
-	} else {
-		return ""
 	}
+	return ""
 }
 
 func GetSessionOptionMaxAge(s Session) int {
@@ -71,10 +69,8 @@ func GetSessionOptionMaxAge(s Session) int {
 		return value
 	} else if s.Options.MaxAge != -1 {
 		return s.Options.MaxAge
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return 28800
 	}
+	return 28800
 }
 
 func GetSessionOptionSecure(s Session) bool {
@@ -84,10 +80,8 @@ func GetSessionOptionSecure(s Session) bool {
 		return value
 	} else if s.Options.Secure != false {
 		return s.Options.Secure
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return false
 	}
+	return false
 }
 
 func GetSessionOptionHttpOnly(s Session) bool {
@@ -97,8 +91,6 @@ func GetSessionOptionHttpOnly(s Session) bool {
 		return value
 	} else if s.Options.HttpOnly != true {
 		return s.Options.HttpOnly
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return true
 	}
+	return true
 }

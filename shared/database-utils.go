@@ -17,6 +17,8 @@ var (
 	flagMySQLParameter = flag.String("database-mysql-parameter", "", "parameter for mysql database")
 )
 
+// TODO: replace defaults returns with your defaults configurations
+
 func GetDatabaseType(d DatabaseInfo) string {
 	if *flagType != "" {
 		return *flagType
@@ -24,9 +26,8 @@ func GetDatabaseType(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_TYPE")
 	} else if d.Type != "" {
 		return d.Type
-	} else {
-		return "Bolt"
 	}
+	return "Bolt"
 }
 
 func GetDatabaseDirectory(d DatabaseInfo) string {
@@ -36,10 +37,8 @@ func GetDatabaseDirectory(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_BOLTDIRECTORY")
 	} else if d.BoltDirectory != "" {
 		return d.BoltDirectory
-	} else {
-		// TODO: replace this if you want replace by a default BoltDirectory
-		return "./"
 	}
+	return "./"
 }
 
 func GetDatabaseName(d DatabaseInfo) string {
@@ -49,10 +48,8 @@ func GetDatabaseName(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_NAME")
 	} else if d.Name != "" {
 		return d.Name
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return "go-microservice"
 	}
+	return "go-microservice"
 }
 
 func GetDatabaseUsername(d DatabaseInfo) string {
@@ -62,10 +59,8 @@ func GetDatabaseUsername(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_USERNAME")
 	} else if d.Username != "" {
 		return d.Username
-	} else {
-		// TODO: replace this if you want replace by a default Username
-		return ""
 	}
+	return ""
 }
 
 func GetDatabasePassword(d DatabaseInfo) string {
@@ -75,10 +70,8 @@ func GetDatabasePassword(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_PASSWORD")
 	} else if d.Password != "" {
 		return d.Password
-	} else {
-		// TODO: replace this if you want replace by a default Password
-		return ""
 	}
+	return ""
 }
 
 func GetDatabaseURL(d DatabaseInfo) string {
@@ -88,10 +81,8 @@ func GetDatabaseURL(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_URL")
 	} else if d.URL != "" {
 		return d.URL
-	} else {
-		// TODO: replace this if you want replace by a default URL
-		return "127.0.0.1"
 	}
+	return "127.0.0.1"
 }
 
 func GetDatabasePort(d DatabaseInfo) int {
@@ -101,10 +92,8 @@ func GetDatabasePort(d DatabaseInfo) int {
 		return value
 	} else if d.Port != -1 {
 		return d.Port
-	} else {
-		// TODO: replace this if you want replace by a default Port
-		return 8080
 	}
+	return 8080
 }
 
 func GetDatabaseParameters(d DatabaseInfo) string {
@@ -114,8 +103,6 @@ func GetDatabaseParameters(d DatabaseInfo) string {
 		return os.Getenv("DATABASE_MYSQLPARAMETER")
 	} else if d.MySQLParameter != "" {
 		return d.MySQLParameter
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return "?parseTime=true"
 	}
+	return "?parseTime=true"
 }

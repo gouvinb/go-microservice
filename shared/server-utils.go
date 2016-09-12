@@ -16,6 +16,8 @@ var (
 	flagKeyFile   = flag.String("server-key-file", "", "key of certificate")
 )
 
+// TODO: replace defaults returns with your defaults configurations
+
 func GetServerHostname(s Server) string {
 	if *flagHostname != "" {
 		return *flagHostname
@@ -23,10 +25,8 @@ func GetServerHostname(s Server) string {
 		return os.Getenv("SERVER_HOSTNAME")
 	} else if s.Hostname != "" {
 		return s.Hostname
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return ""
 	}
+	return ""
 }
 
 func GetServerUseHTTP(s Server) bool {
@@ -36,10 +36,8 @@ func GetServerUseHTTP(s Server) bool {
 		return value
 	} else if s.UseHTTP != false {
 		return s.UseHTTP
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return true
 	}
+	return true
 }
 
 func GetServerUseHTTPS(s Server) bool {
@@ -49,10 +47,8 @@ func GetServerUseHTTPS(s Server) bool {
 		return value
 	} else if s.UseHTTPS != false {
 		return s.UseHTTPS
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return false
 	}
+	return false
 }
 
 func GetServerHTTPPort(s Server) int {
@@ -62,10 +58,8 @@ func GetServerHTTPPort(s Server) int {
 		return value
 	} else if s.HTTPPort != -1 {
 		return s.HTTPPort
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return 8000
 	}
+	return 8000
 }
 
 func GetServerHTTPSPort(s Server) int {
@@ -75,10 +69,8 @@ func GetServerHTTPSPort(s Server) int {
 		return value
 	} else if s.HTTPSPort != -1 {
 		return s.HTTPSPort
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return 443
 	}
+	return 443
 }
 
 func GetServerCertFile(s Server) string {
@@ -88,10 +80,8 @@ func GetServerCertFile(s Server) string {
 		return os.Getenv("SERVER_CERT_FILE")
 	} else if s.CertFile != "" {
 		return s.CertFile
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return ""
 	}
+	return ""
 }
 
 func GetServerKeyFile(s Server) string {
@@ -101,8 +91,6 @@ func GetServerKeyFile(s Server) string {
 		return os.Getenv("SERVER_KEY_FILE")
 	} else if s.KeyFile != "" {
 		return s.KeyFile
-	} else {
-		// TODO: replace this if you want replace by a default name
-		return ""
 	}
+	return ""
 }
