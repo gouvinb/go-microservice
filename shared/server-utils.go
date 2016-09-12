@@ -8,7 +8,7 @@ import (
 
 var (
 	flagHostname  = flag.String("server-hostname", "", "hostname of microservice")
-	flagUseHTTP   = flag.Bool("server-use-http", true, "enable http protocol")
+	flagUseHTTP   = flag.Bool("server-dont-use-http", true, "disable http protocol")
 	flagUseHTTPS  = flag.Bool("server-use-https", false, "enable https protocol")
 	flagHTTPPort  = flag.Int("server-http-port", -1, "http port of microservice")
 	flagHTTPSPort = flag.Int("server-https-port", -1, "https port of microservice")

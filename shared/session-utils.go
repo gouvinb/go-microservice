@@ -7,13 +7,13 @@ import (
 )
 
 var (
-	flagSecretKey      = flag.String("session-secret-key", "", "")
-	flagSessionName    = flag.String("session-name", "", "")
-	flagOptionPath     = flag.String("session-option-path", "", "")
-	flagOptionDomain   = flag.String("session-option-domain", "", "")
-	flagOptionMaxAge   = flag.Int("session-option-max-age", -1, "")
-	flagOptionSecure   = flag.Bool("session-option-secure", false, "")
-	flagOptionHTTPOnly = flag.Bool("session-option-http-only", true, "")
+	flagSecretKey      = flag.String("session-secret-key", "", "secret key for session")
+	flagSessionName    = flag.String("session-name", "", "name of session")
+	flagOptionPath     = flag.String("session-option-path", "", "path used for session")
+	flagOptionDomain   = flag.String("session-option-domain", "", "domain for session")
+	flagOptionMaxAge   = flag.Int("session-option-max-age", -1, "age of session")
+	flagOptionSecure   = flag.Bool("session-option-secure", false, "enable secure session")
+	flagOptionHTTPOnly = flag.Bool("session-option-disable-http-only", true, "disable HTTP only")
 )
 
 func GetSessionSecretKey(s Session) string {
