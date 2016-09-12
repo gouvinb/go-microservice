@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/gouvinb/go-microservice/config"
@@ -18,6 +19,9 @@ func init() {
 
 func main() {
 	log.Println("Start microservice")
+
+	// parse all flag for config
+	flag.Parse()
 
 	// config the settings variable
 	var cfg = config.NewConfiguration()

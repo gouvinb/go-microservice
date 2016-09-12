@@ -1,12 +1,25 @@
 package shared
 
 import (
+	"flag"
 	"os"
 	"strconv"
 )
 
+var (
+	flagSecretKey      = flag.String("session-secret-key", "", "")
+	flagSessionName    = flag.String("session-name", "", "")
+	flagOptionPath     = flag.String("session-option-path", "", "")
+	flagOptionDomain   = flag.String("session-option-domain", "", "")
+	flagOptionMaxAge   = flag.Int("session-option-max-age", -1, "")
+	flagOptionSecure   = flag.Bool("session-option-secure", false, "")
+	flagOptionHTTPOnly = flag.Bool("session-option-http-only", true, "")
+)
+
 func GetSessionSecretKey(s Session) string {
-	if os.Getenv("SESSION_SECRET_KEY") != "" {
+	if *flagSecretKey != "" {
+		return *flagSecretKey
+	} else if os.Getenv("SESSION_SECRET_KEY") != "" {
 		return os.Getenv("SESSION_SECRET_KEY")
 	} else if s.SecretKey != "" {
 		return s.SecretKey
@@ -16,7 +29,9 @@ func GetSessionSecretKey(s Session) string {
 
 }
 func GetSessionName(s Session) string {
-	if os.Getenv("SESSION_NAME") != "" {
+	if *flagSessionName != "" {
+		return *flagSessionName
+	} else if os.Getenv("SESSION_NAME") != "" {
 		return os.Getenv("SESSION_NAME")
 	} else if s.Name != "" {
 		return s.Name
@@ -26,8 +41,10 @@ func GetSessionName(s Session) string {
 }
 
 func GetSessionOptionPath(s Session) string {
-	if os.Getenv("SessionOptionPath") != "" {
-		return os.Getenv("SessionOptionPath")
+	if *flagOptionPath != "" {
+		return *flagOptionPath
+	} else if os.Getenv("SESSION_OPTION_PATH") != "" {
+		return os.Getenv("SESSION_OPTION_PATH")
 	} else if s.Options.Path != "" {
 		return s.Options.Path
 	} else {
@@ -36,8 +53,10 @@ func GetSessionOptionPath(s Session) string {
 }
 
 func GetSessionOptionDomain(s Session) string {
-	if os.Getenv("SessionOptionDomain") != "" {
-		return os.Getenv("SessionOptionDomain")
+	if *flagOptionDomain != "" {
+		return *flagOptionDomain
+	} else if os.Getenv("SESSION_OPTION_DOMAIN") != "" {
+		return os.Getenv("SESSION_OPTION_DOMAIN")
 	} else if s.Options.Domain != "" {
 		return s.Options.Domain
 	} else {
@@ -46,7 +65,9 @@ func GetSessionOptionDomain(s Session) string {
 }
 
 func GetSessionOptionMaxAge(s Session) int {
-	if value, err := strconv.Atoi(os.Getenv("SessionOptionMaxAge")); err == nil {
+	if *flagOptionMaxAge != -1 {
+		return *flagOptionMaxAge
+	} else if value, err := strconv.Atoi(os.Getenv("SESSION_OPTION_MAXAGE")); err == nil {
 		return value
 	} else if s.Options.MaxAge != -1 {
 		return s.Options.MaxAge
@@ -57,7 +78,9 @@ func GetSessionOptionMaxAge(s Session) int {
 }
 
 func GetSessionOptionSecure(s Session) bool {
-	if value, err := strconv.ParseBool(os.Getenv("SessionOptionSecure")); err == nil {
+	if *flagOptionSecure != false {
+		return *flagOptionSecure
+	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_SECURE")); err == nil {
 		return value
 	} else if s.Options.Secure != false {
 		return s.Options.Secure
@@ -68,7 +91,9 @@ func GetSessionOptionSecure(s Session) bool {
 }
 
 func GetSessionOptionHttpOnly(s Session) bool {
-	if value, err := strconv.ParseBool(os.Getenv("SessionOptionHttpOnly")); err == nil {
+	if *flagOptionHTTPOnly != true {
+		return *flagOptionHTTPOnly
+	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_HTTP_ONLY")); err == nil {
 		return value
 	} else if s.Options.HttpOnly != true {
 		return s.Options.HttpOnly

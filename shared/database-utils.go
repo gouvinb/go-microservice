@@ -1,12 +1,26 @@
 package shared
 
 import (
+	"flag"
 	"os"
 	"strconv"
 )
 
+var (
+	flagType           = flag.String("database-type", "", "type of db (ex: bolt or mysql)")
+	flagName           = flag.String("database-name", "", "name of database")
+	flagBoltDirectory  = flag.String("database-bolt-directory", "", "path of database file for BoltDB")
+	flagURL            = flag.String("database-url", "", "url of database")
+	flagUsername       = flag.String("database-username", "", "login of database")
+	flagPassword       = flag.String("database-password", "", "password of database if needed")
+	flagPort           = flag.Int("database-port", -1, "port used by database")
+	flagMySQLParameter = flag.String("database-mysql-parameter", "", "parameter for mysql database")
+)
+
 func GetDatabaseType(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_TYPE") != "" {
+	if *flagType != "" {
+		return *flagType
+	} else if os.Getenv("DATABASE_TYPE") != "" {
 		return os.Getenv("DATABASE_TYPE")
 	} else if d.Type != "" {
 		return d.Type
@@ -16,7 +30,9 @@ func GetDatabaseType(d DatabaseInfo) string {
 }
 
 func GetDatabaseDirectory(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_BOLTDIRECTORY") != "" {
+	if *flagBoltDirectory != "" {
+		return *flagBoltDirectory
+	} else if os.Getenv("DATABASE_BOLTDIRECTORY") != "" {
 		return os.Getenv("DATABASE_BOLTDIRECTORY")
 	} else if d.BoltDirectory != "" {
 		return d.BoltDirectory
@@ -27,7 +43,9 @@ func GetDatabaseDirectory(d DatabaseInfo) string {
 }
 
 func GetDatabaseName(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_NAME") != "" {
+	if *flagName != "" {
+		return *flagName
+	} else if os.Getenv("DATABASE_NAME") != "" {
 		return os.Getenv("DATABASE_NAME")
 	} else if d.Name != "" {
 		return d.Name
@@ -38,7 +56,9 @@ func GetDatabaseName(d DatabaseInfo) string {
 }
 
 func GetDatabaseUsername(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_USERNAME") != "" {
+	if *flagUsername != "" {
+		return *flagUsername
+	} else if os.Getenv("DATABASE_USERNAME") != "" {
 		return os.Getenv("DATABASE_USERNAME")
 	} else if d.Username != "" {
 		return d.Username
@@ -49,7 +69,9 @@ func GetDatabaseUsername(d DatabaseInfo) string {
 }
 
 func GetDatabasePassword(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_PASSWORD") != "" {
+	if *flagPassword != "" {
+		return *flagPassword
+	} else if os.Getenv("DATABASE_PASSWORD") != "" {
 		return os.Getenv("DATABASE_PASSWORD")
 	} else if d.Password != "" {
 		return d.Password
@@ -60,7 +82,9 @@ func GetDatabasePassword(d DatabaseInfo) string {
 }
 
 func GetDatabaseURL(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_URL") != "" {
+	if *flagURL != "" {
+		return *flagURL
+	} else if os.Getenv("DATABASE_URL") != "" {
 		return os.Getenv("DATABASE_URL")
 	} else if d.URL != "" {
 		return d.URL
@@ -71,7 +95,9 @@ func GetDatabaseURL(d DatabaseInfo) string {
 }
 
 func GetDatabasePort(d DatabaseInfo) int {
-	if value, err := strconv.Atoi(os.Getenv("DATABASE_PORT")); err == nil {
+	if *flagPort != -1 {
+		return *flagPort
+	} else if value, err := strconv.Atoi(os.Getenv("DATABASE_PORT")); err == nil {
 		return value
 	} else if d.Port != -1 {
 		return d.Port
@@ -82,7 +108,9 @@ func GetDatabasePort(d DatabaseInfo) int {
 }
 
 func GetDatabaseParameters(d DatabaseInfo) string {
-	if os.Getenv("DATABASE_MYSQLPARAMETER") != "" {
+	if *flagMySQLParameter != "" {
+		return *flagMySQLParameter
+	} else if os.Getenv("DATABASE_MYSQLPARAMETER") != "" {
 		return os.Getenv("DATABASE_MYSQLPARAMETER")
 	} else if d.MySQLParameter != "" {
 		return d.MySQLParameter
