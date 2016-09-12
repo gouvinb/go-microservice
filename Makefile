@@ -97,4 +97,5 @@ vet: clean
 	$(GO_VET) ./...;
 
 # Secure command
-.PHONY: all build build-race clean deps fclean fmt generate install lint publish run test test-verbose update-deps vet
+.PHONY: all build build-race clean deps fclean fmt generate install lint \
+	 publish run test test-verbose update-deps vet
