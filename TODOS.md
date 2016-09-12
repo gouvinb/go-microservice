@@ -1,7 +1,7 @@
 # TODOS
 
+-   ? Add test
 -   [ ] Write completly the README.md
 -   [ ] Add documentation
--   [ ] Add flags support
--   [ ] Add template easy implementation
--   ? Add test
+-   [ ] Add template easier implementation
+-   [x] Add flags support
