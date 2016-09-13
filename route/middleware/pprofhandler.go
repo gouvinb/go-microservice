@@ -13,7 +13,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// PprofHandler routes the pprof pages using httprouter
+// PprofHandler routes the pprof pages using httprouter.
 func PprofHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("PprofHandler called")
 	p := context.Get(r, "params").(httprouter.Params)

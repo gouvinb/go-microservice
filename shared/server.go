@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-// Server stores the hostname and port number
+// Server stores the hostname and port number.
 type Server struct {
 	Hostname  string `json:"Hostname"`  // Server name
 	UseHTTP   bool   `json:"UseHTTP"`   // Listen on HTTP
@@ -21,7 +21,7 @@ type Server struct {
 	KeyFile   string `json:"KeyFile"`   // HTTPS private key
 }
 
-// Run starts the HTTP and/or HTTPS listener
+// Run starts the HTTP and/or HTTPS listener.
 func Run(httpHandlers http.Handler, httpsHandlers http.Handler, s Server) {
 	if GetServerUseHTTP(s) && GetServerUseHTTPS(s) {
 		log.Println("Start https and http server")
@@ -40,7 +40,7 @@ func Run(httpHandlers http.Handler, httpsHandlers http.Handler, s Server) {
 	}
 }
 
-// startHTTP starts the HTTP listener
+// startHTTP starts the HTTP listener.
 func startHTTP(handlers http.Handler, s Server) {
 	log.Println("Running HTTP " + httpAddress(s))
 
@@ -48,7 +48,7 @@ func startHTTP(handlers http.Handler, s Server) {
 	log.Fatalln(http.ListenAndServe(httpAddress(s), handlers))
 }
 
-// startHTTPs starts the HTTPS listener
+// startHTTPs starts the HTTPS listener.
 func startHTTPS(handlers http.Handler, s Server) {
 	log.Println("Running HTTPS " + httpsAddress(s))
 
@@ -56,12 +56,12 @@ func startHTTPS(handlers http.Handler, s Server) {
 	log.Fatalln(http.ListenAndServeTLS(httpsAddress(s), GetServerCertFile(s), GetServerKeyFile(s), handlers))
 }
 
-// httpAddress returns the HTTP address
+// httpAddress returns the HTTP address.
 func httpAddress(s Server) string {
 	return s.Hostname + ":" + fmt.Sprintf("%d", GetServerHTTPPort(s))
 }
 
-// httpsAddress returns the HTTPS address
+// httpsAddress returns the HTTPS address.
 func httpsAddress(s Server) string {
 	return s.Hostname + ":" + fmt.Sprintf("%d", GetServerHTTPSPort(s))
 }

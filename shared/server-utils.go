@@ -22,6 +22,7 @@ var (
 
 // TODO: replace defaults returns with your defaults configurations
 
+// GetServerHostname return the hostname.
 func GetServerHostname(s Server) string {
 	if *flagHostname != "" {
 		return *flagHostname
@@ -33,6 +34,7 @@ func GetServerHostname(s Server) string {
 	return ""
 }
 
+// GetServerUseHTTP return the value for enable http or not.
 func GetServerUseHTTP(s Server) bool {
 	if *flagUseHTTP != true {
 		return *flagUseHTTP
@@ -44,6 +46,7 @@ func GetServerUseHTTP(s Server) bool {
 	return true
 }
 
+// GetServerUseHTTPS return the value for enable https or not.
 func GetServerUseHTTPS(s Server) bool {
 	if *flagUseHTTPS != false {
 		return *flagUseHTTPS
@@ -55,6 +58,7 @@ func GetServerUseHTTPS(s Server) bool {
 	return false
 }
 
+// GetServerHTTPPort return the http port used by go-microservice.
 func GetServerHTTPPort(s Server) int {
 	if *flagHTTPPort != -1 {
 		return *flagHTTPPort
@@ -66,6 +70,7 @@ func GetServerHTTPPort(s Server) int {
 	return 8000
 }
 
+// GetServerHTTPSPort return the https port used by go-microservice.
 func GetServerHTTPSPort(s Server) int {
 	if *flagHTTPSPort != -1 {
 		return *flagHTTPSPort
@@ -77,6 +82,7 @@ func GetServerHTTPSPort(s Server) int {
 	return 443
 }
 
+// GetServerCertFile return certificate file path.
 func GetServerCertFile(s Server) string {
 	if *flagCertFile != "" {
 		return *flagCertFile
@@ -88,6 +94,7 @@ func GetServerCertFile(s Server) string {
 	return ""
 }
 
+// GetServerKeyFile return certificate file password for use the certificate.
 func GetServerKeyFile(s Server) string {
 	if *flagKeyFile != "" {
 		return *flagKeyFile

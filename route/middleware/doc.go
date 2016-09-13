@@ -3,5 +3,5 @@
 // license that can be found in the LICENSE.md file.
 
 // Package middleware allows the use of http.HandlerFunc compatible funcs with
-// julienschmidt/httprouter
+// julienschmidt/httprouter.
 package middleware

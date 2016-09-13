@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE.md file.
 
+// Package config load a default config file throught generate go-bindata.
 package config
 
 import (
@@ -11,31 +12,31 @@ import (
 	"github.com/gouvinb/go-microservice/shared"
 )
 
-// configuration contains the application settings
-type configuration struct {
+// Configuration contains the application settings.
+type Configuration struct {
 	Database shared.DatabaseInfo `json:"Database"`
 	Server   shared.Server       `json:"Server"`
 	Session  shared.Session      `json:"Session"`
 }
 
-// NewConfiguration export interface
-func NewConfiguration() *configuration {
+// NewConfiguration export interface.
+func NewConfiguration() *Configuration {
 	log.Println("New configuration instanciate")
-	return &configuration{}
+	return &Configuration{}
 }
 
-// ParseJSON unmarshals bytes to structs
-func (c *configuration) ParseJSON(b []byte) error {
+// ParseJSON unmarshals bytes to structs.
+func (c *Configuration) ParseJSON(b []byte) error {
 	log.Println("Unmarshals bytes to structs")
 	return json.Unmarshal(b, &c)
 }
 
-// Parser must implement ParseJSON
+// Parser must implement ParseJSON.
 type Parser interface {
 	ParseJSON([]byte) error
 }
 
-// Load the JSON config file
+// Load the JSON config file.
 func Load(configFileByte []byte, configFile string, p Parser) {
 	log.Println("Parse the config")
 	err := p.ParseJSON(configFileByte)

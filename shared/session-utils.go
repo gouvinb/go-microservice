@@ -22,6 +22,7 @@ var (
 
 // TODO: replace defaults returns with your defaults configurations
 
+// GetSessionSecretKey return the secret key of session.
 func GetSessionSecretKey(s Session) string {
 	if *flagSecretKey != "" {
 		return *flagSecretKey
@@ -33,6 +34,7 @@ func GetSessionSecretKey(s Session) string {
 	return "go-microservice-secret-key-default"
 }
 
+// GetSessionName return the session name.
 func GetSessionName(s Session) string {
 	if *flagSessionName != "" {
 		return *flagSessionName
@@ -44,6 +46,7 @@ func GetSessionName(s Session) string {
 	return "go-microservice-default"
 }
 
+// GetSessionOptionPath return the session option path.
 func GetSessionOptionPath(s Session) string {
 	if *flagOptionPath != "" {
 		return *flagOptionPath
@@ -55,6 +58,7 @@ func GetSessionOptionPath(s Session) string {
 	return "/"
 }
 
+// GetSessionOptionDomain return the session option domain.
 func GetSessionOptionDomain(s Session) string {
 	if *flagOptionDomain != "" {
 		return *flagOptionDomain
@@ -66,6 +70,7 @@ func GetSessionOptionDomain(s Session) string {
 	return ""
 }
 
+// GetSessionOptionMaxAge return the session max age.
 func GetSessionOptionMaxAge(s Session) int {
 	if *flagOptionMaxAge != -1 {
 		return *flagOptionMaxAge
@@ -77,6 +82,7 @@ func GetSessionOptionMaxAge(s Session) int {
 	return 28800
 }
 
+// GetSessionOptionSecure return the session secure status.
 func GetSessionOptionSecure(s Session) bool {
 	if *flagOptionSecure != false {
 		return *flagOptionSecure
@@ -88,7 +94,8 @@ func GetSessionOptionSecure(s Session) bool {
 	return false
 }
 
-func GetSessionOptionHttpOnly(s Session) bool {
+// GetSessionOptionHTTPOnly return true if you use http only.
+func GetSessionOptionHTTPOnly(s Session) bool {
 	if *flagOptionHTTPOnly != true {
 		return *flagOptionHTTPOnly
 	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_HTTP_ONLY")); err == nil {

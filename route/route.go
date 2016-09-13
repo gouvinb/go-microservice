@@ -19,27 +19,32 @@ import (
 	"github.com/justinas/alice"
 )
 
-// Load returns the routes and middleware
+// Load returns the routes and middleware.
 func Load() http.Handler {
 	log.Println("Load all handlers")
 	return middlewareHandler(routes())
 }
 
-// LoadHTTPS returns the HTTP routes and middleware
+// LoadHTTPS returns the HTTP routes and middleware.
 func LoadHTTPS() http.Handler {
 	log.Println("Load HTTPS handlers")
 	return middlewareHandler(routes())
 }
 
-// LoadHTTP returns the HTTPS routes and middleware
+// LoadHTTP returns the HTTPS routes and middleware.
 func LoadHTTP() http.Handler {
 	log.Println("Load HTTP handlers")
 	// Uncomment this and comment out the line above to always redirect to HTTPS
-	//return http.HandlerFunc(redirectToHTTPS)
+	// return http.HandlerFunc(redirectToHTTPS())
 	return middlewareHandler(routes())
 }
 
-// routes list all routes
+// redirectToHTTPS redirect from HTTP to HTTPS.
+func redirectToHTTPS(w http.ResponseWriter, req *http.Request) {
+	http.Redirect(w, req, "https://"+req.Host, http.StatusMovedPermanently)
+}
+
+// routes list all routes.
 func routes() *httprouter.Router {
 	r := httprouter.New()
 
@@ -61,7 +66,7 @@ func routes() *httprouter.Router {
 	return r
 }
 
-// middlewareHandler for prevents CSRF and Double Submits
+// middlewareHandler for prevents CSRF and Double Submits.
 func middlewareHandler(h http.Handler) http.Handler {
 	log.Println("Prevents CSRF and Double Submits")
 	cs := csrfbanana.New(h, shared.Store, shared.Name)

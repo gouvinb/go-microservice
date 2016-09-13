@@ -11,7 +11,7 @@ import (
 	"github.com/gouvinb/go-microservice/shared"
 )
 
-// Index displays the default home page
+// Index displays the default home page.
 func Index(w http.ResponseWriter, r *http.Request) {
 	// Get session
 	sess := shared.Instance(r)

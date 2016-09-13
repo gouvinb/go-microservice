@@ -16,16 +16,16 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-// DatabaseInfo is the details for the database connection
+// DatabaseInfo is the details for the database connection.
 type DatabaseInfo struct {
-	Type           string
-	Name           string
-	BoltDirectory  string
-	URL            string
-	Username       string
-	Password       string
-	Port           int
-	MySQLParameter string
+	Type          string `json:"Type"`
+	Name          string `json:"Name"`
+	BoltDirectory string `json:"Bolt-directory"`
+	URL           string `json:"URL"`
+	Username      string `json:"Username"`
+	Password      string `json:"Password"`
+	Port          int    `json:"Port"`
+	Parameter     string `json:"MySQL-parameter"`
 }
 
 const (
@@ -46,7 +46,7 @@ var (
 	SQL *sqlx.DB
 )
 
-// Connect to the database
+// Connect to the database.
 func Connect(d DatabaseInfo) {
 	var err error
 
@@ -85,7 +85,7 @@ func Connect(d DatabaseInfo) {
 	}
 }
 
-// DSN returns the Data Source Name
+// DSN returns the Data Source Name.
 func DSN(d DatabaseInfo) string {
 	// Example: root:@tcp(localhost:3306)/test
 	return GetDatabaseUsername(d) +
@@ -100,7 +100,7 @@ func DSN(d DatabaseInfo) string {
 		GetDatabaseParameters(d)
 }
 
-// Update makes a modification to Bolt
+// Update makes a modification to Bolt.
 func Update(bucketName string, key string, dataStruct interface{}) error {
 	err := BoltDB.Update(func(tx *bolt.Tx) error {
 		// Create the bucket
@@ -124,7 +124,7 @@ func Update(bucketName string, key string, dataStruct interface{}) error {
 	return err
 }
 
-// View retrieves a record in Bolt
+// View retrieves a record in Bolt.
 func View(bucketName string, key string, dataStruct interface{}) error {
 	err := BoltDB.View(func(tx *bolt.Tx) error {
 		// Get the bucket
@@ -151,7 +151,7 @@ func View(bucketName string, key string, dataStruct interface{}) error {
 	return err
 }
 
-// Delete removes a record from Bolt
+// Delete removes a record from Bolt.
 func Delete(bucketName string, key string) error {
 	err := BoltDB.Update(func(tx *bolt.Tx) error {
 		// Get the bucket
@@ -165,7 +165,7 @@ func Delete(bucketName string, key string) error {
 	return err
 }
 
-// CheckConnection returns true if MongoDB is available
+// CheckConnection returns true if MongoDB is available.
 func CheckConnection(databases DatabaseInfo) bool {
 	if Mongo == nil {
 		Connect(databases)

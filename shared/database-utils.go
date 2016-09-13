@@ -11,18 +11,19 @@ import (
 )
 
 var (
-	flagType           = flag.String("database-type", "", "type of db (ex: bolt or mysql)")
-	flagName           = flag.String("database-name", "", "name of database")
-	flagBoltDirectory  = flag.String("database-bolt-directory", "", "path of database file for BoltDB")
-	flagURL            = flag.String("database-url", "", "url of database")
-	flagUsername       = flag.String("database-username", "", "login of database")
-	flagPassword       = flag.String("database-password", "", "password of database if needed")
-	flagPort           = flag.Int("database-port", -1, "port used by database")
-	flagMySQLParameter = flag.String("database-mysql-parameter", "", "parameter for mysql database")
+	flagType          = flag.String("database-type", "", "type of db (ex: bolt or mysql)")
+	flagName          = flag.String("database-name", "", "name of database")
+	flagBoltDirectory = flag.String("database-bolt-directory", "", "path of database file for BoltDB")
+	flagURL           = flag.String("database-url", "", "url of database")
+	flagUsername      = flag.String("database-username", "", "login of database")
+	flagPassword      = flag.String("database-password", "", "password of database if needed")
+	flagPort          = flag.Int("database-port", -1, "port used by database")
+	flagParameter     = flag.String("database-mysql-parameter", "", "parameter for mysql database")
 )
 
 // TODO: replace defaults returns with your defaults configurations
 
+// GetDatabaseType return the database type.
 func GetDatabaseType(d DatabaseInfo) string {
 	if *flagType != "" {
 		return *flagType
@@ -34,6 +35,7 @@ func GetDatabaseType(d DatabaseInfo) string {
 	return "Bolt"
 }
 
+// GetDatabaseDirectory return the database path for BoltDB.
 func GetDatabaseDirectory(d DatabaseInfo) string {
 	if *flagBoltDirectory != "" {
 		return *flagBoltDirectory
@@ -45,6 +47,7 @@ func GetDatabaseDirectory(d DatabaseInfo) string {
 	return "./"
 }
 
+// GetDatabaseName return the database name.
 func GetDatabaseName(d DatabaseInfo) string {
 	if *flagName != "" {
 		return *flagName
@@ -56,6 +59,7 @@ func GetDatabaseName(d DatabaseInfo) string {
 	return "go-microservice"
 }
 
+// GetDatabaseUsername return the username for login to database.
 func GetDatabaseUsername(d DatabaseInfo) string {
 	if *flagUsername != "" {
 		return *flagUsername
@@ -67,6 +71,7 @@ func GetDatabaseUsername(d DatabaseInfo) string {
 	return ""
 }
 
+// GetDatabasePassword return the password for login to database.
 func GetDatabasePassword(d DatabaseInfo) string {
 	if *flagPassword != "" {
 		return *flagPassword
@@ -78,6 +83,7 @@ func GetDatabasePassword(d DatabaseInfo) string {
 	return ""
 }
 
+// GetDatabaseURL return database URL.
 func GetDatabaseURL(d DatabaseInfo) string {
 	if *flagURL != "" {
 		return *flagURL
@@ -89,6 +95,7 @@ func GetDatabaseURL(d DatabaseInfo) string {
 	return "127.0.0.1"
 }
 
+// GetDatabasePort return the database port if you used an URL.
 func GetDatabasePort(d DatabaseInfo) int {
 	if *flagPort != -1 {
 		return *flagPort
@@ -100,13 +107,14 @@ func GetDatabasePort(d DatabaseInfo) int {
 	return 8080
 }
 
+// GetDatabaseParameters return a string of all parameters for mysql link.
 func GetDatabaseParameters(d DatabaseInfo) string {
-	if *flagMySQLParameter != "" {
-		return *flagMySQLParameter
-	} else if os.Getenv("DATABASE_MYSQLPARAMETER") != "" {
-		return os.Getenv("DATABASE_MYSQLPARAMETER")
-	} else if d.MySQLParameter != "" {
-		return d.MySQLParameter
+	if *flagParameter != "" {
+		return *flagParameter
+	} else if os.Getenv("DATABASE_PARAMETER") != "" {
+		return os.Getenv("DATABASE_PARAMETER")
+	} else if d.Parameter != "" {
+		return d.Parameter
 	}
 	return "?parseTime=true"
 }

@@ -17,7 +17,7 @@ var (
 	Name string
 )
 
-// Session stores session level information
+// Session stores session level information.
 type Session struct {
 	// Pulled from: http://www.gorillatoolkit.org/pkg/sessions#Options
 	Options sessions.Options `json:"Options"`
@@ -27,7 +27,7 @@ type Session struct {
 	SecretKey string `json:"SecretKey"`
 }
 
-// Configure the session cookie store
+// Configure the session cookie store.
 func Configure(s Session) {
 	Store = sessions.NewCookieStore([]byte(GetSessionSecretKey(s)))
 	Name = GetSessionName(s)
@@ -36,18 +36,18 @@ func Configure(s Session) {
 	s.Options.Domain = GetSessionOptionDomain(s)
 	s.Options.MaxAge = GetSessionOptionMaxAge(s)
 	s.Options.Secure = GetSessionOptionSecure(s)
-	s.Options.HttpOnly = GetSessionOptionHttpOnly(s)
+	s.Options.HttpOnly = GetSessionOptionHTTPOnly(s)
 
 	Store.Options = &s.Options
 }
 
-// Instance returns a new session, never returns an error
+// Instance returns a new session, never returns an error.
 func Instance(r *http.Request) *sessions.Session {
 	session, _ := Store.Get(r, Name)
 	return session
 }
 
-// Empty deletes all the current session values
+// Empty deletes all the current session values.
 func Empty(sess *sessions.Session) {
 	// Clear out all stored values in the cookie
 	for k := range sess.Values {
