@@ -11,14 +11,18 @@ written again with a goal to be adapted to docker container.
 To download, run the following command:
 
 ```bash
+go get -u github.com/jteeuwen/go-bindata/... # Needed for go generate
 go get github.com/gouvinb/go-microservice
 ```
 
 ## Features
 
+-   Configuration for developper and production
+-   Adapted for lot of database (MySQL, MariaDB, Bolt, Mongo)
+
 ## Structure
 
-```txt
+```java
 .
 ├── main.go
 ├── config
@@ -43,17 +47,56 @@ go get github.com/gouvinb/go-microservice
     └── [SHARED]-utils.go
 ```
 
-### Main.go
+### Main package
+
+It handles initializing the logs and load config.json throught go-bindata befor
+launch microservice.
 
 ### Config
 
 #### Go
 
+Config load a default config file (_config.json_) throught generate go-bindata.
+
 #### JSON
+
+Config.json contains all environement, it needs converts into managable Go
+source code before build (_see Main.go at line 17_).
+
+**The default configuration is based on the default values from shared package.
+Please edit in primary the config.json file instead of values from shared
+package.**
 
 ### Controller
 
+Package controller can send commands to the model to update the model's
+state. It can also send commands to its associated view to change the view's
+presentation of the model.
+
+#### Example
+
+<!--
+* POST   http://localhost/value      - Create a new value
+* GET    http://localhost/value      - Retrieve a list of all values
+* PUT    http://localhost/value/{id} - Update a value by ID
+* DELETE http://localhost/value      - Delete all values by ID
+-->
+
 ### Model
+
+Package model stores data that is retrieved according to commands from the
+controller.
+
+#### Example
+
+<!--
+* CREATE
+* GET LIST
+* GET ONE
+* EDIT
+* DELETE ALL
+* DELETE ONE
+-->
 
 ### Route
 
