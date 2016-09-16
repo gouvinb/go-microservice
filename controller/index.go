@@ -8,8 +8,14 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gouvinb/go-microservice/route/router"
 	"github.com/gouvinb/go-microservice/shared"
 )
+
+func init() {
+	// Main page
+	router.Get("/", Index)
+}
 
 // Index displays the default home page.
 func Index(w http.ResponseWriter, r *http.Request) {

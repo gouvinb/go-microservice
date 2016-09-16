@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE.md file.
 
-// Package route load and list all route for web server
+// Package route load router for web server
 package route
 
 import (
@@ -11,24 +11,23 @@ import (
 
 	"github.com/gouvinb/go-microservice/controller"
 	"github.com/gouvinb/go-microservice/route/middleware"
+	"github.com/gouvinb/go-microservice/route/router"
 	"github.com/gouvinb/go-microservice/shared"
 
 	"github.com/gorilla/context"
 	"github.com/josephspurrier/csrfbanana"
-	"github.com/julienschmidt/httprouter"
-	"github.com/justinas/alice"
 )
 
 // Load returns the routes and middleware.
 func Load() http.Handler {
 	log.Println("Load all handlers")
-	return middlewareHandler(routes())
+	return middlewareHandler(router.Instance())
 }
 
 // LoadHTTPS returns the HTTP routes and middleware.
 func LoadHTTPS() http.Handler {
 	log.Println("Load HTTPS handlers")
-	return middlewareHandler(routes())
+	return middlewareHandler(router.Instance())
 }
 
 // LoadHTTP returns the HTTPS routes and middleware.
@@ -36,34 +35,12 @@ func LoadHTTP() http.Handler {
 	log.Println("Load HTTP handlers")
 	// Uncomment this and comment out the line above to always redirect to HTTPS
 	// return http.HandlerFunc(redirectToHTTPS())
-	return middlewareHandler(routes())
+	return middlewareHandler(router.Instance())
 }
 
 // redirectToHTTPS redirect from HTTP to HTTPS.
 func redirectToHTTPS(w http.ResponseWriter, req *http.Request) {
 	http.Redirect(w, req, "https://"+req.Host, http.StatusMovedPermanently)
-}
-
-// routes list all routes.
-func routes() *httprouter.Router {
-	r := httprouter.New()
-
-	log.Println("Set 404 handler")
-	r.NotFound = alice.
-		New().
-		ThenFunc(controller.Error404)
-
-	log.Println("Set index handler")
-	r.GET("/", middleware.Handler(alice.
-		New().
-		ThenFunc(controller.Index)))
-
-	log.Println("Set Pprof handler")
-	r.GET("/debug/pprof/*pprof", middleware.Handler(alice.
-		New(middleware.DisallowAnon).
-		ThenFunc(middleware.PprofHandler)))
-
-	return r
 }
 
 // middlewareHandler for prevents CSRF and Double Submits.
