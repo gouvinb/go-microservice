@@ -9,9 +9,15 @@ import (
 	"net/http"
 	"net/http/pprof"
 
+	"github.com/gouvinb/go-microservice/route/router"
+
 	"github.com/gorilla/context"
 	"github.com/julienschmidt/httprouter"
 )
+
+func init() {
+	router.Get("/debug/pprof/*pprof", router.Chain(PprofHandler))
+}
 
 // PprofHandler routes the pprof pages using httprouter.
 func PprofHandler(w http.ResponseWriter, r *http.Request) {

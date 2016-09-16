@@ -6,19 +6,21 @@ package controller
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gouvinb/go-microservice/route/router"
-	// "github.com/gouvinb/go-microservice/shared"
 )
 
 func init() {
+	log.Println("Init error handlers")
+
 	// This does not work for routes where the path matches, but the method does not
 	// (on HEAD and OPTIONS need to check)
 	// https://github.com/julienschmidt/httprouter/issues/13
-	//var e405 http.HandlerFunc = Error405
-	//router.Instance().HandleMethodNotAllowed = true
-	//router.Instance().MethodNotAllowed = e405
+	var e405 http.HandlerFunc = Error405
+	router.Instance().HandleMethodNotAllowed = true
+	router.Instance().MethodNotAllowed = e405
 
 	// 404 Page
 	var e404 http.HandlerFunc = Error404
@@ -30,6 +32,13 @@ func Error404(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusNotFound)
 	fmt.Fprint(w, "{ \"error\": \"Not Found 404\"}")
+}
+
+// Error405 handles 405 - Page Not Found.
+func Error405(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusMethodNotAllowed)
+	fmt.Fprint(w, "{ \"error\": \"Method Not Allowed 405\"}")
 }
 
 // Error500 handles 500 - Internal Server Error.

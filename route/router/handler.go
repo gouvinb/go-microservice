@@ -1,6 +1,7 @@
 package router
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/context"
@@ -11,6 +12,7 @@ import (
 // Example: r.GET("/", httprouterwrapper.HandlerFunc(controller.Index))
 // Source: http://nicolasmerouze.com/guide-routers-golang/
 func HandlerFunc(h http.HandlerFunc) httprouter.Handle {
+	log.Println("HandlerFunc used")
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		context.Set(r, params, p)
 		h.ServeHTTP(w, r)
@@ -21,6 +23,7 @@ func HandlerFunc(h http.HandlerFunc) httprouter.Handle {
 // Example: r.GET("/", httprouterwrapper.Handler(http.HandlerFunc(controller.Index)))
 // Source: http://nicolasmerouze.com/guide-routers-golang/
 func Handler(h http.Handler) httprouter.Handle {
+	log.Println("Handler used")
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		context.Set(r, params, p)
 		h.ServeHTTP(w, r)

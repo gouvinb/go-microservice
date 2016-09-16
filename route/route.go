@@ -40,6 +40,7 @@ func LoadHTTP() http.Handler {
 
 // redirectToHTTPS redirect from HTTP to HTTPS.
 func redirectToHTTPS(w http.ResponseWriter, req *http.Request) {
+	log.Println("Redirect to https")
 	http.Redirect(w, req, "https://"+req.Host, http.StatusMovedPermanently)
 }
 
