@@ -25,20 +25,24 @@ type Session struct {
 	Name string `json:"Name"`
 	// Key for: http://www.gorillatoolkit.org/pkg/sessions#CookieStore.New
 	SecretKey string `json:"SecretKey"`
+	// Bool for session enabler
+	EnableSession bool `json:"EnableSession"`
 }
 
 // Configure the session cookie store.
 func Configure(s Session) {
-	Store = sessions.NewCookieStore([]byte(GetSessionSecretKey(s)))
-	Name = GetSessionName(s)
+	if IsSessionEnabled(s) {
+		Store = sessions.NewCookieStore([]byte(GetSessionSecretKey(s)))
+		Name = GetSessionName(s)
 
-	s.Options.Path = GetSessionOptionPath(s)
-	s.Options.Domain = GetSessionOptionDomain(s)
-	s.Options.MaxAge = GetSessionOptionMaxAge(s)
-	s.Options.Secure = GetSessionOptionSecure(s)
-	s.Options.HttpOnly = GetSessionOptionHTTPOnly(s)
+		s.Options.Path = GetSessionOptionPath(s)
+		s.Options.Domain = GetSessionOptionDomain(s)
+		s.Options.MaxAge = GetSessionOptionMaxAge(s)
+		s.Options.Secure = GetSessionOptionSecure(s)
+		s.Options.HttpOnly = GetSessionOptionHTTPOnly(s)
 
-	Store.Options = &s.Options
+		Store.Options = &s.Options
+	}
 }
 
 // Instance returns a new session, never returns an error.

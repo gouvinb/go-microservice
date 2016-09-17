@@ -19,6 +19,7 @@
 		"KeyFile": ""
 	},
 	"Session": {
+		"EnableSession": false,
 		"SecretKey": "go-microservice-secret-key",
 		"Name": "go-microservice",
 		"Options": {
@@ -28,5 +29,8 @@
 			"Secure": false,
 			"HttpOnly": true
 		}
+	},
+	"Cors": {
+		"EnableCors": false
 	}
 }

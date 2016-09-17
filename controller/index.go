@@ -28,5 +28,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	msg := "{ \"message\": \"if you see this json, it's because the micro service is OP\"}"
 	fmt.Fprint(w, msg)
 
-	sess.Save(r, w)
+	if sess != nil {
+		sess.Save(r, w)
+	}
 }

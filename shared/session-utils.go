@@ -11,6 +11,7 @@ import (
 )
 
 var (
+	flagEnableSession  = flag.Bool("session-enable", false, "enable session")
 	flagSecretKey      = flag.String("session-secret-key", "", "secret key for session")
 	flagSessionName    = flag.String("session-name", "", "name of session")
 	flagOptionPath     = flag.String("session-option-path", "", "path used for session")
@@ -21,6 +22,18 @@ var (
 )
 
 // TODO: replace defaults returns with your defaults configurations
+
+// IsSessionEnabled return true if use session.
+func IsSessionEnabled(s Session) bool {
+	if *flagEnableSession != false {
+		return *flagEnableSession
+	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_ENABLE")); err == nil {
+		return value
+	} else if s.EnableSession != true {
+		return s.EnableSession
+	}
+	return true
+}
 
 // GetSessionSecretKey return the secret key of session.
 func GetSessionSecretKey(s Session) string {
