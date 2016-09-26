@@ -9,9 +9,9 @@ import (
 	"log"
 	"net/http"
 
-	// "github.com/gouvinb/go-microservice/route/middleware"
-	"github.com/gouvinb/go-microservice/route/router"
-	"github.com/gouvinb/go-microservice/shared"
+	// "route/middleware"
+	"route/router"
+	"shared"
 )
 
 func init() {

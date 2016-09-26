@@ -9,12 +9,12 @@ import (
 	"flag"
 	"log"
 
-	"github.com/gouvinb/go-microservice/config"
-	"github.com/gouvinb/go-microservice/route"
-	"github.com/gouvinb/go-microservice/shared"
+	"config"
+	"route"
+	"shared"
 )
 
-//go:generate go-bindata -pkg config -o config/bindata.go config/...
+//go:generate go-bindata -pkg config -o vendor/config/bindata.go vendor/config/...
 
 func init() {
 	// Verbose logging with file name and line number

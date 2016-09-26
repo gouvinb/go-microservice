@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/gouvinb/go-microservice/shared"
+	"shared"
 )
 
 // Configuration contains the application settings.

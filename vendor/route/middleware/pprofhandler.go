@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"net/http/pprof"
 
-	"github.com/gouvinb/go-microservice/route/router"
+	"route/router"
 
 	"github.com/gorilla/context"
 	"github.com/julienschmidt/httprouter"

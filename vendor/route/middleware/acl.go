@@ -8,7 +8,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gouvinb/go-microservice/shared"
+	"shared"
 )
 
 // DisallowAuth does not allow authenticated users to access the page

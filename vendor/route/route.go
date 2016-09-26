@@ -9,10 +9,10 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gouvinb/go-microservice/controller"
-	"github.com/gouvinb/go-microservice/route/middleware"
-	"github.com/gouvinb/go-microservice/route/router"
-	"github.com/gouvinb/go-microservice/shared"
+	"controller"
+	"route/middleware"
+	"route/router"
+	"shared"
 
 	"github.com/gorilla/context"
 	"github.com/josephspurrier/csrfbanana"

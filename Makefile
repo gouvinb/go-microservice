@@ -40,7 +40,7 @@ build-race: lint vet generate
 clean:
 	@echo "==> Clean $(PACKAGE) ..."; \
 	$(GO_CLEAN) $(TOP_PACKAGE_DIR)/$(PACKAGE); \
-	rm -fv ./config/bindata.go #./go-microservice.db
+	rm -fv ./vendor/config/bindata.go #./go-microservice.db
 
 deps:
 	@echo "==> Install dependencies for $(PACKAGE) ..."; \
@@ -50,7 +50,7 @@ deps:
 fclean:
 	@echo "==> Clean $(PACKAGE) ..."; \
 	$(GO_CLEAN) $(TOP_PACKAGE_DIR)/$(PACKAGE); \
-	rm -fv ./config/bindata.go ./go-microservice.db
+	rm -fv ./vendor/config/bindata.go ./go-microservice.db
 
 fmt:
 	@echo "==> Formatting $(PACKAGE) ..."; \

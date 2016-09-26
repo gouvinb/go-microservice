@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gouvinb/go-microservice/route/router"
+	"route/router"
 )
 
 func init() {
