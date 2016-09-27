@@ -11,6 +11,7 @@ GO_DEPS=$(GO_CMD) get -d -v
 GO_DEPS_UPDATE=$(GO_CMD) get -d -v -u
 GO_FMT=$(GO_CMD) fmt
 GO_GENERATE=$(GO_CMD) generate
+GO_IMPORTS=goimports
 GO_INSTALL=$(GO_CMD) install -v
 GO_LINT=golint -min_confidence=0
 GO_RUN=$(GO_CMD) run
@@ -26,25 +27,46 @@ PACKAGE := go-microservice/
 ARGS=main.go
 FILE=.
 
-# Command
+# Primary commands
 all: build
 
-build: lint vet generate
+build: clean imports fmt lint vet generate
 	@echo "==> Build $(PACKAGE) ..."; \
 	$(GO_BUILD) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
 
-build-race: lint vet generate
+build-race: clean imports fmt lint vet generate
 	@echo "==> Build race $(PACKAGE) ..."; \
 	$(GO_BUILD_RACE) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
 
+install: clean imports fmt lint vet generate
+	@echo "==> Install $(PACKAGE) ..."; \
+	$(GO_INSTALL) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
+
+publish: build fclean
+	@echo "==> Publish $(PACKAGE) ..."; \
+	git add $(FILE);
+	@read -ep "Commit message: " MESSAGE; \
+	git commit -am "$$MESSAGE";
+	@read -ep "Branch name: " NAME; \
+	git push origin "$$NAME";
+
+run: clean imports fmt lint vet generate
+	@echo "==> Run $(PACKAGE) ..."; \
+	$(GO_RUN) $(ARGS);
+
+test: clean imports fmt lint vet generate
+	@echo "==> Unit Testing $(PACKAGE) ..."; \
+	$(GO_TEST) $(TOP_PACKAGE_DIR)/$(PACKAGE);
+
+test-verbose: clean imports fmt lint vet generate
+	@echo "==> Unit Testing $(PACKAGE) ..."; \
+	$(GO_TEST_VERBOSE) $(TOP_PACKAGE_DIR)/$(PACKAGE);
+
+# Secondary commands
 clean:
 	@echo "==> Clean $(PACKAGE) ..."; \
 	$(GO_CLEAN) $(TOP_PACKAGE_DIR)/$(PACKAGE); \
 	rm -fv ./vendor/config/bindata.go #./go-microservice.db
-
-deps:
-	@echo "==> Install dependencies for $(PACKAGE) ..."; \
-	$(GO_DEPS) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
 
 # TODO: add all file for remove and run in a new base
 fclean:
@@ -60,42 +82,27 @@ generate:
 	@echo "==> Generate $(PACKAGE) ..."; \
 	$(GO_GENERATE) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
 
-install: fmt lint vet generate
-	@echo "==> Install $(PACKAGE) ..."; \
-	$(GO_INSTALL) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
+imports:
+	@echo "==> Imports added for $(PACKAGE) ..."; \
+	$(GO_IMPORTS) -w $(FILE)
 
-lint: clean
+lint:
 	@echo "==> Lint $(PACKAGE) ..."; \
 	$(GO_LINT) ./...;
 
-publish: fmt lint vet generate build fclean
-	@echo "==> Publish $(PACKAGE) ..."; \
-	git add $(FILE);
-	@read -ep "Commit message: " MESSAGE; \
-	git commit -am "$$MESSAGE";
-	@read -ep "Branch name: " NAME; \
-	git push origin "$$NAME";
+vet:
+	@echo "==> Vet $(PACKAGE) ..."; \
+	$(GO_VET) ./...;
 
-run: lint vet generate
-	@echo "==> Run $(PACKAGE) ..."; \
-	$(GO_RUN) $(ARGS);
-
-test: deps lint vet generate
-	@echo "==> Unit Testing $(PACKAGE) ..."; \
-	$(GO_TEST) $(TOP_PACKAGE_DIR)/$(PACKAGE);
-
-test-verbose: deps lint vet generate
-	@echo "==> Unit Testing $(PACKAGE) ..."; \
-	$(GO_TEST_VERBOSE) $(TOP_PACKAGE_DIR)/$(PACKAGE);
+# Other commands
+deps:
+	@echo "==> Install dependencies for $(PACKAGE) ..."; \
+	$(GO_DEPS) $(TOP_PACKAGE_DIR)/$(PACKAGE) || exit 1;
 
 update-deps:
 	@echo "==> Update dependencies for $(PACKAGE) ..."; \
 	$(GO_DEPS_UPDATE) $(TOP_PACKAGE_DIR)/$(PACKAGE);
 
-vet: clean
-	@echo "==> Vet $(PACKAGE) ..."; \
-	$(GO_VET) ./...;
-
 # Secure command
-.PHONY: all build build-race clean deps fclean fmt generate install lint \
-	 publish run test test-verbose update-deps vet
+.PHONY: all build build-race clean deps fclean fmt generate imports install \
+	 lint publish run test test-verbose update-deps vet

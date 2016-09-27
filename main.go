@@ -31,7 +31,7 @@ func main() {
 	var cfg = config.NewConfiguration()
 
 	log.Println("Load the configuration file")
-	configFile, err := config.Asset("config/config.json")
+	configFile, err := config.Asset("vendor/config/config.json")
 	if err != nil {
 		log.Fatalln(err)
 	} else {

@@ -1,8 +1,6 @@
 package router
 
-import (
-	"github.com/julienschmidt/httprouter"
-)
+import "github.com/julienschmidt/httprouter"
 
 // Delete is a shortcut for router.Handle("DELETE", path, handle)
 func Delete(path string, fn httprouter.Handle) {
