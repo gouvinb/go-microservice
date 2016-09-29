@@ -42,26 +42,26 @@ func Run(httpHandlers http.Handler, httpsHandlers http.Handler, s Server) {
 
 // startHTTP starts the HTTP listener.
 func startHTTP(handlers http.Handler, s Server) {
-	log.Println("Running HTTP " + httpAddress(s))
+	log.Println("Running HTTP " + HttpAddress(s))
 
 	// Start the HTTP listener
-	log.Fatalln(http.ListenAndServe(httpAddress(s), handlers))
+	log.Fatalln(http.ListenAndServe(HttpAddress(s), handlers))
 }
 
 // startHTTPs starts the HTTPS listener.
 func startHTTPS(handlers http.Handler, s Server) {
-	log.Println("Running HTTPS " + httpsAddress(s))
+	log.Println("Running HTTPS " + HttpsAddress(s))
 
 	// Start the HTTPS listener
-	log.Fatalln(http.ListenAndServeTLS(httpsAddress(s), GetServerCertFile(s), GetServerKeyFile(s), handlers))
+	log.Fatalln(http.ListenAndServeTLS(HttpsAddress(s), GetServerCertFile(s), GetServerKeyFile(s), handlers))
 }
 
-// httpAddress returns the HTTP address.
-func httpAddress(s Server) string {
+// HttpAddress returns the HTTP address.
+func HttpAddress(s Server) string {
 	return s.Hostname + ":" + fmt.Sprintf("%d", GetServerHTTPPort(s))
 }
 
-// httpsAddress returns the HTTPS address.
-func httpsAddress(s Server) string {
+// HttpsAddress returns the HTTPS address.
+func HttpsAddress(s Server) string {
 	return s.Hostname + ":" + fmt.Sprintf("%d", GetServerHTTPSPort(s))
 }

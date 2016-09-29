@@ -40,10 +40,13 @@ func main() {
 		log.Println("Configure the session cookie store")
 		shared.Configure(cfg.Session)
 
+		log.Println("Prepare cors")
+		shared.Prepare(cfg.Cors)
+
 		log.Println("Connect to database")
 		shared.Connect(cfg.Database)
 
-		log.Println("Start the listener")
+		log.Println("Start server")
 		shared.Run(route.LoadHTTP(), route.LoadHTTPS(), cfg.Server)
 	}
 }

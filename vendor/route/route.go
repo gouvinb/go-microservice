@@ -59,6 +59,11 @@ func middlewareHandler(h http.Handler) http.Handler {
 		csrfbanana.SingleToken = false
 		h = cs
 	}
+
+	if shared.EnableCors {
+		h = shared.Handler(h)
+	}
+
 	log.Println("Logger request activated")
 	h = middleware.LogrequestHandler(h)
 

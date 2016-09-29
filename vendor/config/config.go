@@ -15,6 +15,7 @@ import (
 // Configuration contains the application settings.
 type Configuration struct {
 	Database shared.DatabaseInfo `json:"Database"`
+	Cors     shared.Cors         `json:"Cors"`
 	Server   shared.Server       `json:"Server"`
 	Session  shared.Session      `json:"Session"`
 }

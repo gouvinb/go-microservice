@@ -56,11 +56,11 @@ run: clean imports fmt lint vet generate
 
 test: clean imports fmt lint vet generate
 	@echo "==> Unit Testing $(PACKAGE) ..."; \
-	$(GO_TEST) $(TOP_PACKAGE_DIR)/$(PACKAGE);
+	$(GO_TEST) $(TOP_PACKAGE_DIR)/$(PACKAGE) ./...;
 
 test-verbose: clean imports fmt lint vet generate
 	@echo "==> Unit Testing $(PACKAGE) ..."; \
-	$(GO_TEST_VERBOSE) $(TOP_PACKAGE_DIR)/$(PACKAGE);
+	$(GO_TEST_VERBOSE) $(TOP_PACKAGE_DIR)/$(PACKAGE) ./...;
 
 # Secondary commands
 clean:
