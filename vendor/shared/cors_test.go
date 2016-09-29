@@ -38,7 +38,7 @@ func TestCors(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	rr := httptest.NewRecorder()
+	res := httptest.NewRecorder()
 	h := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		wo := w.Header().Get(allowOrigin)
 		ro := r.Header.Get(origin)
@@ -57,8 +57,8 @@ func TestCors(t *testing.T) {
 		}
 	})
 
-	CORS(h).ServeHTTP(rr, req)
-	if status := rr.Code; status != http.StatusOK {
+	Handler(h).ServeHTTP(res, req)
+	if status := res.Code; status != http.StatusOK {
 		t.Fatal(http.StatusFound)
 	}
 }
