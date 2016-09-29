@@ -21,47 +21,47 @@ type Server struct {
 	KeyFile   string `json:"KeyFile"`   // HTTPS private key
 }
 
-// Run starts the HTTP and/or HTTPS listener.
-func Run(httpHandlers http.Handler, httpsHandlers http.Handler, s Server) {
+// ServerRun starts the HTTP and/or HTTPS listener.
+func ServerRun(httpHandlers http.Handler, httpsHandlers http.Handler, s Server) {
 	if GetServerUseHTTP(s) && GetServerUseHTTPS(s) {
 		log.Println("Start https and http server")
 		go func() {
-			startHTTPS(httpsHandlers, s)
+			ServerStartHTTPS(httpsHandlers, s)
 		}()
-		startHTTP(httpHandlers, s)
+		ServerStartHTTP(httpHandlers, s)
 	} else if GetServerUseHTTP(s) {
 		log.Println("Start http server")
-		startHTTP(httpHandlers, s)
+		ServerStartHTTP(httpHandlers, s)
 	} else if GetServerUseHTTPS(s) {
 		log.Println("Start https server")
-		startHTTPS(httpsHandlers, s)
+		ServerStartHTTPS(httpsHandlers, s)
 	} else {
 		log.Fatalln("Config file does not specify a listener to start")
 	}
 }
 
-// startHTTP starts the HTTP listener.
-func startHTTP(handlers http.Handler, s Server) {
-	log.Println("Running HTTP " + HttpAddress(s))
+// ServerStartHTTP starts the HTTP listener.
+func ServerStartHTTP(handlers http.Handler, s Server) {
+	log.Println("Running HTTP " + ServerHTTPAddress(s))
 
 	// Start the HTTP listener
-	log.Fatalln(http.ListenAndServe(HttpAddress(s), handlers))
+	log.Fatalln(http.ListenAndServe(ServerHTTPAddress(s), handlers))
 }
 
-// startHTTPs starts the HTTPS listener.
-func startHTTPS(handlers http.Handler, s Server) {
-	log.Println("Running HTTPS " + HttpsAddress(s))
+// ServerStartHTTPS starts the HTTPS listener.
+func ServerStartHTTPS(handlers http.Handler, s Server) {
+	log.Println("Running HTTPS " + ServerHTTPSAddress(s))
 
 	// Start the HTTPS listener
-	log.Fatalln(http.ListenAndServeTLS(HttpsAddress(s), GetServerCertFile(s), GetServerKeyFile(s), handlers))
+	log.Fatalln(http.ListenAndServeTLS(ServerHTTPSAddress(s), GetServerCertFile(s), GetServerKeyFile(s), handlers))
 }
 
-// HttpAddress returns the HTTP address.
-func HttpAddress(s Server) string {
+// ServerHTTPAddress returns the HTTP address.
+func ServerHTTPAddress(s Server) string {
 	return s.Hostname + ":" + fmt.Sprintf("%d", GetServerHTTPPort(s))
 }
 
-// HttpsAddress returns the HTTPS address.
-func HttpsAddress(s Server) string {
+// ServerHTTPSAddress returns the HTTPS address.
+func ServerHTTPSAddress(s Server) string {
 	return s.Hostname + ":" + fmt.Sprintf("%d", GetServerHTTPSPort(s))
 }

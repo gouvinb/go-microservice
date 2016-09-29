@@ -8,15 +8,15 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"route/routewrapper"
 
-	"route/router"
 	"shared"
 )
 
 func init() {
 	log.Println("Init index handlers")
 
-	router.Get("/", router.Chain(Index))
+	routewrapper.Get("/", routewrapper.Chain(Index))
 }
 
 // Index displays the default home page.

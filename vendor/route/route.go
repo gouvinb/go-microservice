@@ -11,7 +11,7 @@ import (
 
 	"controller"
 	"route/middleware"
-	"route/router"
+	"route/routewrapper"
 	"shared"
 
 	"github.com/gorilla/context"
@@ -21,13 +21,13 @@ import (
 // Load returns the routes and middleware.
 func Load() http.Handler {
 	log.Println("Load all handlers")
-	return middlewareHandler(router.Instance())
+	return middlewareHandler(routewrapper.Instance())
 }
 
 // LoadHTTPS returns the HTTP routes and middleware.
 func LoadHTTPS() http.Handler {
 	log.Println("Load HTTPS handlers")
-	return middlewareHandler(router.Instance())
+	return middlewareHandler(routewrapper.Instance())
 }
 
 // LoadHTTP returns the HTTPS routes and middleware.
@@ -35,7 +35,7 @@ func LoadHTTP() http.Handler {
 	log.Println("Load HTTP handlers")
 	// Uncomment this and comment out the line above to always redirect to HTTPS
 	// return http.HandlerFunc(redirectToHTTPS())
-	return middlewareHandler(router.Instance())
+	return middlewareHandler(routewrapper.Instance())
 }
 
 // redirectToHTTPS redirect from HTTP to HTTPS.

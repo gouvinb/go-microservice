@@ -45,7 +45,7 @@ func SessionConfigure(s Session) {
 	}
 }
 
-// Instance returns a new session, never returns an error.
+// SessionInstance returns a new session, never returns an error.
 func SessionInstance(r *http.Request) *sessions.Session {
 	session, _ := Store.Get(r, Name)
 	return session

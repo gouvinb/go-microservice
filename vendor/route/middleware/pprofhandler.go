@@ -9,14 +9,14 @@ import (
 	"net/http"
 	"net/http/pprof"
 
-	"route/router"
+	"route/routewrapper"
 
 	"github.com/gorilla/context"
 	"github.com/julienschmidt/httprouter"
 )
 
 func init() {
-	router.Get("/debug/pprof/*pprof", router.Chain(PprofHandler))
+	routewrapper.Get("/debug/pprof/*pprof", routewrapper.Chain(PprofHandler))
 }
 
 // PprofHandler routes the pprof pages using httprouter.

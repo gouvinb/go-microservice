@@ -8,8 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"route/router"
+	"route/routewrapper"
 )
 
 func init() {
@@ -19,12 +18,12 @@ func init() {
 	// (on HEAD and OPTIONS need to check)
 	// https://github.com/julienschmidt/httprouter/issues/13
 	var e405 http.HandlerFunc = Error405
-	router.Instance().HandleMethodNotAllowed = true
-	router.Instance().MethodNotAllowed = e405
+	routewrapper.Instance().HandleMethodNotAllowed = true
+	routewrapper.Instance().MethodNotAllowed = e405
 
 	// 404 Page
 	var e404 http.HandlerFunc = Error404
-	router.Instance().NotFound = e404
+	routewrapper.Instance().NotFound = e404
 }
 
 // Error404 handles 404 - Page Not Found.

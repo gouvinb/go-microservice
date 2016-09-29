@@ -47,6 +47,6 @@ func main() {
 		shared.DatabaseConfigure(cfg.Database)
 
 		log.Println("Start server")
-		shared.Run(route.LoadHTTP(), route.LoadHTTPS(), cfg.Server)
+		shared.ServerRun(route.LoadHTTP(), route.LoadHTTPS(), cfg.Server)
 	}
 }

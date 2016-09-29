@@ -10,18 +10,18 @@ import (
 	"net/http"
 
 	"route/middleware"
-	"route/router"
+	"route/routewrapper"
 	"shared"
 )
 
 func init() {
 	log.Println("Init index handlers")
 
-	router.Get("/api/sample", router.Chain(SampleAPIGET))
-	router.Get("/api/sample/auth", router.Chain(SampleAPIAuthGET, middleware.DisallowAnon))
-	router.Get("/api/sample/anon", router.Chain(SampleAPIAnonGET, middleware.DisallowAuth))
+	routewrapper.Get("/api/sample", routewrapper.Chain(SampleAPIGET))
+	routewrapper.Get("/api/sample/auth", routewrapper.Chain(SampleAPIAuthGET, middleware.DisallowAnon))
+	routewrapper.Get("/api/sample/anon", routewrapper.Chain(SampleAPIAnonGET, middleware.DisallowAuth))
 	if shared.Name != "" && shared.Store != nil {
-		router.Post("/sample/anon", router.Chain(SampleAPIAnonGET, middleware.DisallowAuth))
+		routewrapper.Post("/sample/anon", routewrapper.Chain(SampleAPIAnonGET, middleware.DisallowAuth))
 	}
 }
 

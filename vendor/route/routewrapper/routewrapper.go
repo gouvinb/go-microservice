@@ -1,4 +1,4 @@
-package router
+package routewrapper
 
 import (
 	"log"
@@ -11,15 +11,15 @@ import (
 )
 
 var (
-	r RouterInfo
+	r RouteWapperInfo
 )
 
 const (
 	params = "params"
 )
 
-// RouterInfo is the details.
-type RouterInfo struct {
+// RouteWapperInfo is the details.
+type RouteWapperInfo struct {
 	Router *httprouter.Router
 }
 
@@ -29,7 +29,7 @@ func init() {
 }
 
 // ReadConfig returns the information.
-func ReadConfig() RouterInfo {
+func ReadConfig() RouteWapperInfo {
 	log.Println("Read config")
 	return r
 }
