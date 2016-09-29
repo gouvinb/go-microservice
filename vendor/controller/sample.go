@@ -43,7 +43,7 @@ func SampleAPIAuthGET(w http.ResponseWriter, r *http.Request) {
 	// Get session
 	sess := shared.Instance(r)
 
-	msg := "{ \"message\": \"your are in GET /api/sample and authenticated user are allowed only\"}"
+	msg := `{"message": "your are in GET /api/sample and authenticated user are allowed only"}"`
 	fmt.Fprint(w, msg)
 
 	if sess != nil {
@@ -56,7 +56,7 @@ func SampleAPIAnonGET(w http.ResponseWriter, r *http.Request) {
 	// Get session
 	sess := shared.Instance(r)
 
-	msg := "{ \"message\": \"your are in GET /api/sample and anonymous user are allowed only\"}"
+	msg := `{"message": "your are in GET /api/sample and anonymous user are allowed only"}"`
 	fmt.Fprint(w, msg)
 
 	if sess != nil {

@@ -11,7 +11,7 @@ import (
 	"shared"
 )
 
-// DisallowAuth does not allow authenticated users to access the page
+// DisallowAuth does not allow authenticated users to access the page.
 func DisallowAuth(h http.Handler) http.Handler {
 	log.Println("Set DisallowAuth")
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +27,7 @@ func DisallowAuth(h http.Handler) http.Handler {
 	})
 }
 
-// DisallowAnon does not allow anonymous users to access the page
+// DisallowAnon does not allow anonymous users to access the page.
 func DisallowAnon(h http.Handler) http.Handler {
 	log.Println("Set DisallowAnon")
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

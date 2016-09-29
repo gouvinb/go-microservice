@@ -31,7 +31,7 @@ import "net/http"
 // EnableCors is true if enabled
 var EnableCors bool
 
-// Cors parameters
+// Cors parameters.
 type Cors struct {
 	EnableCors bool `json:"EnableCors"`
 }
@@ -51,12 +51,12 @@ const (
 	headers string = "Accept, Accept-Encoding, Authorization, Content-Length, Content-Type, X-CSRF-Token"
 )
 
-// Prepare set values for cors
+// Prepare set values for cors.
 func Prepare(c Cors) {
 	EnableCors = IsCorsEnable(c)
 }
 
-// Handler will allow cross-origin HTTP requests
+// Handler will allow cross-origin HTTP requests.
 func Handler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Set allow origin to match origin of our request or fall back to *

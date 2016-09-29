@@ -14,7 +14,7 @@ var (
 	flagEnableCors = flag.Bool("cors-enable", false, "enable cors")
 )
 
-// IsCorsEnable return true if use cors
+// IsCorsEnable return true if use cors.
 func IsCorsEnable(c Cors) bool {
 	if *flagEnableCors != false {
 		return *flagEnableCors

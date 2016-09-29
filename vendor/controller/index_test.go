@@ -18,21 +18,21 @@ func TestIndex(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response
 	res := httptest.NewRecorder()
 	handler := http.HandlerFunc(Index)
 
 	// Our handlers satisfy http.Handler, so we can call their ServeHTTP method
-	// directly and pass in our Request and ResponseRecorder.
+	// directly and pass in our Request and ResponseRecorder
 	handler.ServeHTTP(res, req)
 
-	// Check the status code is what we expect.
+	// Check the status code is what we expect
 	if status := res.Code; status != http.StatusOK {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
 
-	// Check the response body is what we expect.
+	// Check the response body is what we expect
 	expected := `{"message": "if you see this json, it's because the micro service is OP"}`
 	if res.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
