@@ -51,13 +51,13 @@ const (
 	headers string = "Accept, Accept-Encoding, Authorization, Content-Length, Content-Type, X-CSRF-Token"
 )
 
-// Prepare set values for cors.
-func Prepare(c Cors) {
+// CorsConfigure set values for cors.
+func CorsConfigure(c Cors) {
 	EnableCors = IsCorsEnable(c)
 }
 
-// Handler will allow cross-origin HTTP requests.
-func Handler(next http.Handler) http.Handler {
+// CorsHandler will allow cross-origin HTTP requests.
+func CorsHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Set allow origin to match origin of our request or fall back to *
 		if o := r.Header.Get(origin); o != "" {

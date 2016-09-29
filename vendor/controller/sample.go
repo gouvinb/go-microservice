@@ -28,7 +28,7 @@ func init() {
 // SampleAPIGET displays the default home page.
 func SampleAPIGET(w http.ResponseWriter, r *http.Request) {
 	// Get session
-	sess := shared.Instance(r)
+	sess := shared.SessionInstance(r)
 
 	msg := "{ \"message\": \"your are in GET /api/sample and all user are allowed\"}"
 	fmt.Fprint(w, msg)
@@ -41,7 +41,7 @@ func SampleAPIGET(w http.ResponseWriter, r *http.Request) {
 // SampleAPIAuthGET displays the default home page.
 func SampleAPIAuthGET(w http.ResponseWriter, r *http.Request) {
 	// Get session
-	sess := shared.Instance(r)
+	sess := shared.SessionInstance(r)
 
 	msg := `{"message": "your are in GET /api/sample and authenticated user are allowed only"}"`
 	fmt.Fprint(w, msg)
@@ -54,7 +54,7 @@ func SampleAPIAuthGET(w http.ResponseWriter, r *http.Request) {
 // SampleAPIAnonGET displays the default home page.
 func SampleAPIAnonGET(w http.ResponseWriter, r *http.Request) {
 	// Get session
-	sess := shared.Instance(r)
+	sess := shared.SessionInstance(r)
 
 	msg := `{"message": "your are in GET /api/sample and anonymous user are allowed only"}"`
 	fmt.Fprint(w, msg)

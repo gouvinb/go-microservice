@@ -29,8 +29,8 @@ type Session struct {
 	EnableSession bool `json:"EnableSession"`
 }
 
-// Configure the session cookie store.
-func Configure(s Session) {
+// SessionConfigure the session cookie store.
+func SessionConfigure(s Session) {
 	if IsSessionEnabled(s) {
 		Store = sessions.NewCookieStore([]byte(GetSessionSecretKey(s)))
 		Name = GetSessionName(s)
@@ -46,13 +46,13 @@ func Configure(s Session) {
 }
 
 // Instance returns a new session, never returns an error.
-func Instance(r *http.Request) *sessions.Session {
+func SessionInstance(r *http.Request) *sessions.Session {
 	session, _ := Store.Get(r, Name)
 	return session
 }
 
-// Empty deletes all the current session values.
-func Empty(sess *sessions.Session) {
+// SessionEmpty deletes all the current session values.
+func SessionEmpty(sess *sessions.Session) {
 	// Clear out all stored values in the cookie
 	for k := range sess.Values {
 		delete(sess.Values, k)

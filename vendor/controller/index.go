@@ -22,7 +22,7 @@ func init() {
 // Index displays the default home page.
 func Index(w http.ResponseWriter, r *http.Request) {
 	// Get session
-	sess := shared.Instance(r)
+	sess := shared.SessionInstance(r)
 
 	msg := `{"message": "if you see this json, it's because the micro service is OP"}`
 	fmt.Fprint(w, msg)

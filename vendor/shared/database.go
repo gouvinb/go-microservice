@@ -46,8 +46,8 @@ var (
 	SQL *sqlx.DB
 )
 
-// Connect to the database.
-func Connect(d DatabaseInfo) {
+// DatabaseConfigure to the database.
+func DatabaseConfigure(d DatabaseInfo) {
 	var err error
 
 	// Store the config
@@ -56,7 +56,7 @@ func Connect(d DatabaseInfo) {
 	switch GetDatabaseType(databases) {
 	case TypeMySQL:
 		// Connect to MySQL
-		if SQL, err = sqlx.Connect("mysql", DSN(databases)); err != nil {
+		if SQL, err = sqlx.Connect("mysql", DatabaseDNS(databases)); err != nil {
 			log.Fatalln("SQL Driver Error", err)
 		}
 		// Check if is alive
@@ -85,8 +85,8 @@ func Connect(d DatabaseInfo) {
 	}
 }
 
-// DSN returns the Data Source Name.
-func DSN(d DatabaseInfo) string {
+// DatabaseDNS returns the Data Source Name.
+func DatabaseDNS(d DatabaseInfo) string {
 	// Example: root:@tcp(localhost:3306)/test
 	return GetDatabaseUsername(d) +
 		":" +
@@ -100,8 +100,8 @@ func DSN(d DatabaseInfo) string {
 		GetDatabaseParameters(d)
 }
 
-// Update makes a modification to Bolt.
-func Update(bucketName string, key string, dataStruct interface{}) error {
+// DatabaseBoltUpdate makes a modification to Bolt.
+func DatabaseBoltUpdate(bucketName string, key string, dataStruct interface{}) error {
 	err := BoltDB.Update(func(tx *bolt.Tx) error {
 		// Create the bucket
 		bucket, e := tx.CreateBucketIfNotExists([]byte(bucketName))
@@ -124,8 +124,8 @@ func Update(bucketName string, key string, dataStruct interface{}) error {
 	return err
 }
 
-// View retrieves a record in Bolt.
-func View(bucketName string, key string, dataStruct interface{}) error {
+// DatabaseBoltView retrieves a record in Bolt.
+func DatabaseBoltView(bucketName string, key string, dataStruct interface{}) error {
 	err := BoltDB.View(func(tx *bolt.Tx) error {
 		// Get the bucket
 		b := tx.Bucket([]byte(bucketName))
@@ -151,8 +151,8 @@ func View(bucketName string, key string, dataStruct interface{}) error {
 	return err
 }
 
-// Delete removes a record from Bolt.
-func Delete(bucketName string, key string) error {
+// DatabaseBoltDelete removes a record from Bolt.
+func DatabaseBoltDelete(bucketName string, key string) error {
 	err := BoltDB.Update(func(tx *bolt.Tx) error {
 		// Get the bucket
 		b := tx.Bucket([]byte(bucketName))
@@ -165,10 +165,10 @@ func Delete(bucketName string, key string) error {
 	return err
 }
 
-// CheckConnection returns true if MongoDB is available.
-func CheckConnection(databases DatabaseInfo) bool {
+// DatabaseMongoCheckConnection returns true if MongoDB is available.
+func DatabaseMongoCheckConnection(databases DatabaseInfo) bool {
 	if Mongo == nil {
-		Connect(databases)
+		DatabaseConfigure(databases)
 	}
 
 	if Mongo != nil {

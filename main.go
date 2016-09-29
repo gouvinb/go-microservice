@@ -38,13 +38,13 @@ func main() {
 		config.Load(configFile, "config.json", cfg)
 
 		log.Println("Configure the session cookie store")
-		shared.Configure(cfg.Session)
+		shared.SessionConfigure(cfg.Session)
 
-		log.Println("Prepare cors")
-		shared.Prepare(cfg.Cors)
+		log.Println("Configure cors")
+		shared.CorsConfigure(cfg.Cors)
 
-		log.Println("Connect to database")
-		shared.Connect(cfg.Database)
+		log.Println("Configure and connect database")
+		shared.DatabaseConfigure(cfg.Database)
 
 		log.Println("Start server")
 		shared.Run(route.LoadHTTP(), route.LoadHTTPS(), cfg.Server)
