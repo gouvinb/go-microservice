@@ -3,29 +3,29 @@
 ## license that can be found in the LICENSE.md file.
 
 # Makefile for Go
-GO_CMD=go
-GO_BUILD=$(GO_CMD) build
-GO_BUILD_RACE=$(GO_CMD) build -race
-GO_CLEAN=$(GO_CMD) clean
-GO_DEPS=$(GO_CMD) get -d -v
-GO_DEPS_UPDATE=$(GO_CMD) get -d -v -u
-GO_FMT=$(GO_CMD) fmt
-GO_GENERATE=$(GO_CMD) generate
-GO_IMPORTS=goimports
-GO_INSTALL=$(GO_CMD) install -v
-GO_LINT=golint -min_confidence=0
-GO_RUN=$(GO_CMD) run
-GO_TEST=$(GO_CMD) test
-GO_TEST_VERBOSE=$(GO_CMD) test -v
-GO_VET=$(GO_CMD) vet -v
+GO_CMD							=		go
+GO_BUILD						=		$(GO_CMD) build
+GO_BUILD_RACE				=		$(GO_CMD) build -race
+GO_CLEAN						=		$(GO_CMD) clean
+GO_DEPS							=		$(GO_CMD) get -d -v
+GO_DEPS_UPDATE			=		$(GO_CMD) get -d -v -u
+GO_FMT							=		$(GO_CMD) fmt
+GO_GENERATE					=		$(GO_CMD) generate
+GO_IMPORTS					=		goimports
+GO_INSTALL					=		$(GO_CMD) install -v
+GO_LINT							=		golint -min_confidence=0
+GO_RUN							=		$(GO_CMD) run
+GO_TEST							=		$(GO_CMD) test
+GO_TEST_VERBOSE			=		$(GO_CMD) test -v
+GO_VET							=		$(GO_CMD) vet -v
 
 # Packages
-TOP_PACKAGE_DIR := github.com/gouvinb
-PACKAGE := go-microservice/
+TOP_PACKAGE_DIR			:=	github.com/gouvinb
+PACKAGE							:=	go-microservice/
 
 # Publish
-ARGS=main.go
-FILE=.
+ARGS								=		main.go
+FILE								=		.
 
 # Primary commands
 all: build
