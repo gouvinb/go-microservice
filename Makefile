@@ -13,7 +13,7 @@ GO_FMT							=		$(GO_CMD) fmt
 GO_GENERATE					=		$(GO_CMD) generate
 GO_IMPORTS					=		goimports
 GO_INSTALL					=		$(GO_CMD) install -v
-GO_LINT							=		golint -min_confidence=0
+GO_LINT							=		golint -min_confidence=0.3
 GO_RUN							=		$(GO_CMD) run
 GO_TEST							=		$(GO_CMD) test
 GO_TEST_VERBOSE			=		$(GO_CMD) test -v
@@ -104,5 +104,5 @@ update-deps:
 	$(GO_DEPS_UPDATE) $(TOP_PACKAGE_DIR)/$(PACKAGE);
 
 # Secure command
-.PHONY: all build build-race clean deps fclean fmt generate imports install \
-	 lint publish run test test-verbose update-deps vet
+.PHONY: all build build-race install publish run test test-verbose clean \
+	 fclean fmt generate imports lint vet deps update-deps

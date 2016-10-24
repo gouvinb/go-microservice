@@ -15,6 +15,21 @@ go get -u github.com/jteeuwen/go-bindata/... # Needed for go generate
 go get github.com/gouvinb/go-microservice
 ```
 
+## Prerequisites
+
+### Go 1.6 and upper version
+
+This project are fully compatible.
+
+### Go 1.5
+
+You need to set GOVENDOREXPERIMENT to 1 for use vendor folder.
+
+### Go 1.4 and earlier
+
+This project aren't compatible as you do not update your imports.
+
+
 ## Features
 
 -   Configuration for developper and production
@@ -25,26 +40,31 @@ go get github.com/gouvinb/go-microservice
 ```java
 .
 ├── main.go
-├── config
-│   ├── config.go
-│   └── config.json
-├── controller
-│   ├── doc.go
-│   └── [CONTROLLER].go
-├── model
-│   ├── doc.go
-│   └── [MODEL].go
-├── route
-│   ├── middleware
-│   │   ├── doc.go
-│   │   └── [MIDDLEWARE].go
-│   └── route.go
-└── shared
-    ├── doc.go
-    ├── database.go
-    ├── server.go
-    ├── session.go
-    └── [SHARED]-utils.go
+└── vendor
+    ├── config
+    │   ├── config.go
+    │   └── config.json
+    ├── controller
+    │   ├── doc.go
+    │   └── [CONTROLLER].go
+    ├── model
+    │   ├── doc.go
+    │   └── [MODEL].go
+    ├── route
+    │   ├── middleware
+    │   │   ├── doc.go
+    │   │   └── [MIDDLEWARE].go
+    │   ├── routerwrapper
+    │   │   ├── doc.go
+    │   │   └── [ROUTERWRAPPER].go
+    │   └── route.go
+    └── shared
+        ├── doc.go
+        ├── cors.go
+        ├── database.go
+        ├── server.go
+        ├── session.go
+        └── [SHARED]-utils.go
 ```
 
 ### Main package
@@ -73,46 +93,30 @@ Package controller can send commands to the model to update the model's
 state. It can also send commands to its associated view to change the view's
 presentation of the model.
 
-#### Example
-
-<!--
-* POST   http://localhost/value      - Create a new value
-* GET    http://localhost/value      - Retrieve a list of all values
-* PUT    http://localhost/value/{id} - Update a value by ID
-* DELETE http://localhost/value      - Delete all values by ID
--->
-
 ### Model
 
 Package model stores data that is retrieved according to commands from the
 controller.
 
-#### Example
-
-<!--
-* CREATE
-* GET LIST
-* GET ONE
-* EDIT
-* DELETE ALL
-* DELETE ONE
--->
-
 ### Route
 
-#### Go
+Package route load router for web server.
 
 #### Middleware
 
+Package middleware allows the use of http.HandlerFunc compatible funcs with
+julienschmidt/httprouter.
+
+#### RouteWrapper
+
+Package routewrapper is a wrapper for a better implementation of routes.
+
 ### Shared
 
-#### Database
-
-#### Server
-
-#### Session
-
-#### Utils
+Package shared contain all microservice config. Server is a wrapper around the
+net/http package that starts listeners for HTTP and HTTPS. Session provides a
+wrapper for gorilla/sessions package. Database provides an interface for
+migrating a database backwards and forwards.
 
 ## Feedback
 
