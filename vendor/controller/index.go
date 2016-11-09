@@ -11,6 +11,7 @@ import (
 	"route/routewrapper"
 
 	"shared"
+	"time"
 )
 
 func init() {
@@ -24,10 +25,14 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	// Get session
 	sess := shared.SessionInstance(r)
 
-	msg := `{"message": "if you see this json, it's because the micro service is OP"}`
-	fmt.Fprint(w, msg)
-
 	if sess != nil {
+		v := shared.ViewNew(r)
+		v.Name = "index/index"
+		v.ViewRender(w)
 		sess.Save(r, w)
+	} else {
+		msg := `{"state":"ok","timestamp":"` + time.Now().String() + `","path":"` +
+			r.URL.Path + `"}`
+		fmt.Fprint(w, msg)
 	}
 }

@@ -9,13 +9,14 @@ import (
 	"log"
 	"net/http"
 	"route/routewrapper"
+	"shared"
 )
 
 func init() {
 	log.Println("Init error handlers")
 
-	// This does not work for routes where the path matches, but the method does not
-	// (on HEAD and OPTIONS need to check)
+	// This does not work for routes where the path matches, but the method does
+	// not (on HEAD and OPTIONS need to check)
 	// https://github.com/julienschmidt/httprouter/issues/13
 	var e405 http.HandlerFunc = Error405
 	routewrapper.Instance().HandleMethodNotAllowed = true
@@ -28,28 +29,68 @@ func init() {
 
 // Error404 handles 404 - Page Not Found.
 func Error404(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusNotFound)
-	fmt.Fprint(w, "{ \"error\": \"Not Found 404\"}")
+	// Get session
+	sess := shared.SessionInstance(r)
+
+	if sess != nil {
+		v := shared.ViewNew(r)
+		v.Name = "error/404"
+		v.ViewRender(w)
+		sess.Save(r, w)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprint(w, "{ \"error\": \"Not Found 404\"}")
+	}
 }
 
 // Error405 handles 405 - Page Not Found.
 func Error405(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusMethodNotAllowed)
-	fmt.Fprint(w, "{ \"error\": \"Method Not Allowed 405\"}")
+	// Get session
+	sess := shared.SessionInstance(r)
+
+	if sess != nil {
+		v := shared.ViewNew(r)
+		v.Name = "error/405"
+		v.ViewRender(w)
+		sess.Save(r, w)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		fmt.Fprint(w, "{ \"error\": \"Method Not Allowed 405\"}")
+	}
 }
 
 // Error500 handles 500 - Internal Server Error.
 func Error500(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusInternalServerError)
-	fmt.Fprint(w, "{ \"error\": \"Internal Server Error 500\"}")
+	// Get session
+	sess := shared.SessionInstance(r)
+
+	if sess != nil {
+		v := shared.ViewNew(r)
+		v.Name = "error/500"
+		v.ViewRender(w)
+		sess.Save(r, w)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, "{ \"error\": \"Internal Server Error 500\"}")
+	}
 }
 
 // InvalidToken handles CSRF attacks.
 func InvalidToken(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusForbidden)
-	fmt.Fprint(w, "{ \"error\": \"Token expired\"}")
+	// Get session
+	sess := shared.SessionInstance(r)
+
+	if sess != nil {
+		v := shared.ViewNew(r)
+		v.Name = "error/csrf"
+		v.ViewRender(w)
+		sess.Save(r, w)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusForbidden)
+		fmt.Fprint(w, "{ \"error\": \"Token expired\"}")
+	}
 }
