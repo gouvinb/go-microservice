@@ -18,6 +18,7 @@ type Configuration struct {
 	Cors     shared.Cors         `json:"Cors"`
 	Server   shared.Server       `json:"Server"`
 	Session  shared.Session      `json:"Session"`
+	View     shared.View         `json:"View"`
 }
 
 // NewConfiguration export interface.

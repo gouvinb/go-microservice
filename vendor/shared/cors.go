@@ -48,7 +48,8 @@ const (
 	methods          string = "POST, GET, OPTIONS, PUT, DELETE, HEAD, PATCH"
 
 	// If you want to expose some other headers add it here
-	headers string = "Accept, Accept-Encoding, Authorization, Content-Length, Content-Type, X-CSRF-Token"
+	headers string = "Accept, Accept-Encoding, Authorization, Content-Length, " +
+		"Content-Type, X-CSRF-Token"
 )
 
 // CorsConfigure set values for cors.
@@ -72,7 +73,8 @@ func CorsHandler(next http.Handler) http.Handler {
 		w.Header().Set(allowCredentials, credentials)
 		w.Header().Set(exposeHeaders, headers)
 
-		// If this was preflight options request let's write empty ok response and return
+		// If this was preflight options request let's write empty ok response and
+		// return
 		if r.Method == options {
 			w.WriteHeader(http.StatusOK)
 			w.Write(nil)

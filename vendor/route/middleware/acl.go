@@ -19,7 +19,7 @@ func DisallowAuth(h http.Handler) http.Handler {
 		if sess := shared.SessionInstance(r); sess != nil {
 			// If user is authenticated, don't allow them to access the page
 			if sess.Values["id"] != nil {
-				http.Redirect(w, r, "/", http.StatusFound)
+				http.Redirect(w, r, "/", http.StatusForbidden)
 				return
 			}
 		}
@@ -35,7 +35,7 @@ func DisallowAnon(h http.Handler) http.Handler {
 		if sess := shared.SessionInstance(r); sess != nil {
 			// If user is not authenticated, don't allow them to access the page
 			if sess.Values["id"] == nil {
-				http.Redirect(w, r, "/", http.StatusFound)
+				http.Redirect(w, r, "/", http.StatusForbidden)
 				return
 			}
 		}

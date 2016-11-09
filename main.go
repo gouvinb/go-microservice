@@ -10,6 +10,7 @@ import (
 	"log"
 
 	"config"
+	"plugin"
 	"route"
 	"shared"
 )
@@ -45,6 +46,12 @@ func main() {
 
 		log.Println("Configure and connect database")
 		shared.DatabaseConfigure(cfg.Database)
+
+		// Setup the views
+		shared.ViewConfigure(cfg.View)
+		shared.ViewLoadTemplates(shared.GetTemplateRoot(cfg.View.Template),
+			shared.GetTemplateChildren(cfg.View.Template))
+		shared.ViewLoadPlugins(plugin.TagHelper(cfg.View), plugin.NoEscape())
 
 		log.Println("Start server")
 		shared.ServerRun(route.LoadHTTP(), route.LoadHTTPS(), cfg.Server)

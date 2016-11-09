@@ -11,14 +11,15 @@ import (
 )
 
 var (
-	flagEnableCors = flag.Bool("cors-enable", false, "enable cors")
+	flagCorsEnable = flag.Bool("cors-enable", false, "enable cors")
 )
 
 // IsCorsEnable return true if use cors.
 func IsCorsEnable(c Cors) bool {
-	if *flagEnableCors != false {
-		return *flagEnableCors
-	} else if value, err := strconv.ParseBool(os.Getenv("CORS_ENABLE")); err == nil {
+	value, err := strconv.ParseBool(os.Getenv("CORS_ENABLE"))
+	if *flagCorsEnable != false {
+		return *flagCorsEnable
+	} else if err == nil {
 		return value
 	} else if c.EnableCors != true {
 		return c.EnableCors

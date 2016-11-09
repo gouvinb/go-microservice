@@ -47,7 +47,9 @@ func redirectToHTTPS(w http.ResponseWriter, req *http.Request) {
 // middlewareHandler for prevents CSRF, Double Submits, Cors.
 func middlewareHandler(h http.Handler) http.Handler {
 	log.Println("Prevents CSRF, Double Submits, Cors")
-	if shared.Name != "" && shared.Store != nil {
+	if shared.EnableCors && shared.Name != "" && shared.Store != nil {
+		log.Fatal("Cors and Session conflit")
+	} else if shared.Name != "" && shared.Store != nil {
 		cs := csrfbanana.New(h, shared.Store, shared.Name)
 		cs.FailureHandler(http.HandlerFunc(controller.InvalidToken))
 		cs.ClearAfterUsage(true)
@@ -56,9 +58,7 @@ func middlewareHandler(h http.Handler) http.Handler {
 		csrfbanana.TokenName = "token"
 		csrfbanana.SingleToken = false
 		h = cs
-	}
-
-	if shared.EnableCors {
+	} else if shared.EnableCors {
 		h = shared.CorsHandler(h)
 	}
 

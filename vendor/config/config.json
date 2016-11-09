@@ -19,7 +19,7 @@
 		"KeyFile": ""
 	},
 	"Session": {
-		"EnableSession": false,
+		"EnableSession": true,
 		"SecretKey": "go-microservice-secret-key",
 		"Name": "go-microservice",
 		"Options": {
@@ -28,6 +28,19 @@
 			"MaxAge": 28800,
 			"Secure": false,
 			"HttpOnly": true
+		}
+	},
+	"View": {
+		"BaseURI": "/",
+		"Extension": "tmpl",
+		"Folder": "template",
+		"Name": "blank",
+		"Caching": true,
+		"Template": {
+			"Root": "base",
+			"Children": [
+				"footer"
+			]
 		}
 	},
 	"Cors": {

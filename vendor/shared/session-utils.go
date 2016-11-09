@@ -11,23 +11,29 @@ import (
 )
 
 var (
-	flagEnableSession  = flag.Bool("session-enable", false, "enable session")
-	flagSecretKey      = flag.String("session-secret-key", "", "secret key for session")
-	flagSessionName    = flag.String("session-name", "", "name of session")
-	flagOptionPath     = flag.String("session-option-path", "", "path used for session")
-	flagOptionDomain   = flag.String("session-option-domain", "", "domain for session")
-	flagOptionMaxAge   = flag.Int("session-option-max-age", -1, "age of session")
-	flagOptionSecure   = flag.Bool("session-option-secure", false, "enable secure session")
-	flagOptionHTTPOnly = flag.Bool("session-option-disable-http-only", true, "disable HTTP only")
+	flagEnableSession = flag.Bool("session-enable", false, "enable session")
+	flagSecretKey     = flag.String("session-secret-key", "",
+		"secret key for session")
+	flagSessionName = flag.String("session-name", "", "name of session")
+	flagOptionPath  = flag.String("session-option-path", "",
+		"path used for session")
+	flagOptionDomain = flag.String("session-option-domain", "",
+		"domain for session")
+	flagOptionMaxAge = flag.Int("session-option-max-age", -1, "age of session")
+	flagOptionSecure = flag.Bool("session-option-secure", false,
+		"enable secure session")
+	flagOptionHTTPOnly = flag.Bool("session-option-disable-http-only", true,
+		"disable HTTP only")
 )
 
 // TODO: replace defaults returns with your defaults configurations
 
 // IsSessionEnabled return true if use session.
 func IsSessionEnabled(s Session) bool {
+	value, err := strconv.ParseBool(os.Getenv("SESSION_ENABLE"))
 	if *flagEnableSession != false {
 		return *flagEnableSession
-	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_ENABLE")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.EnableSession != true {
 		return s.EnableSession
@@ -85,9 +91,10 @@ func GetSessionOptionDomain(s Session) string {
 
 // GetSessionOptionMaxAge return the session max age.
 func GetSessionOptionMaxAge(s Session) int {
+	value, err := strconv.Atoi(os.Getenv("SESSION_OPTION_MAXAGE"))
 	if *flagOptionMaxAge != -1 {
 		return *flagOptionMaxAge
-	} else if value, err := strconv.Atoi(os.Getenv("SESSION_OPTION_MAXAGE")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.Options.MaxAge != -1 {
 		return s.Options.MaxAge
@@ -97,9 +104,10 @@ func GetSessionOptionMaxAge(s Session) int {
 
 // GetSessionOptionSecure return the session secure status.
 func GetSessionOptionSecure(s Session) bool {
+	value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_SECURE"))
 	if *flagOptionSecure != false {
 		return *flagOptionSecure
-	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_SECURE")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.Options.Secure != false {
 		return s.Options.Secure
@@ -109,9 +117,10 @@ func GetSessionOptionSecure(s Session) bool {
 
 // GetSessionOptionHTTPOnly return true if you use http only.
 func GetSessionOptionHTTPOnly(s Session) bool {
+	value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_HTTP_ONLY"))
 	if *flagOptionHTTPOnly != true {
 		return *flagOptionHTTPOnly
-	} else if value, err := strconv.ParseBool(os.Getenv("SESSION_OPTION_HTTP_ONLY")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.Options.HttpOnly != true {
 		return s.Options.HttpOnly
