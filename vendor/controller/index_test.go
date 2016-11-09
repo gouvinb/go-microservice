@@ -18,7 +18,8 @@ func TestIndex(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response
+	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to
+	// record the response
 	res := httptest.NewRecorder()
 	handler := http.HandlerFunc(Index)
 
@@ -33,7 +34,7 @@ func TestIndex(t *testing.T) {
 	}
 
 	// Check the response body is what we expect
-	expected := `{"message": "if you see this json, it's because the micro service is OP"}`
+	expected := `if you see this json, it's because the micro service is OP`
 	if res.Body.String() != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			res.Body.String(), expected)

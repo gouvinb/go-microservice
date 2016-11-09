@@ -8,8 +8,9 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// HandlerFunc accepts the name of a function so you don't have to wrap it with http.HandlerFunc.
-// Example: r.GET("/", httprouterwrapper.HandlerFunc(controller.Index))
+// HandlerFunc accepts the name of a function so you don't have to wrap it with
+// http.HandlerFunc.
+// Example: routerwrapper.Get("/", routerwrapper.HandlerFunc(controller.Index))
 // Source: http://nicolasmerouze.com/guide-routers-golang/
 func HandlerFunc(h http.HandlerFunc) httprouter.Handle {
 	log.Println("HandlerFunc used")
@@ -20,7 +21,8 @@ func HandlerFunc(h http.HandlerFunc) httprouter.Handle {
 }
 
 // Handler accepts a handler to make it compatible with http.HandlerFunc.
-// Example: r.GET("/", httprouterwrapper.Handler(http.HandlerFunc(controller.Index)))
+// Example: routerwrapper.Get("/", routerwrapper.Handler(http.HandlerFunc(
+// controller.Index)))
 // Source: http://nicolasmerouze.com/guide-routers-golang/
 func Handler(h http.Handler) httprouter.Handle {
 	log.Println("Handler used")

@@ -22,19 +22,19 @@ type Server struct {
 }
 
 // ServerRun starts the HTTP and/or HTTPS listener.
-func ServerRun(httpHandlers http.Handler, httpsHandlers http.Handler, s Server) {
+func ServerRun(httpHdlrs http.Handler, httpsHdlrs http.Handler, s Server) {
 	if GetServerUseHTTP(s) && GetServerUseHTTPS(s) {
 		log.Println("Start https and http server")
 		go func() {
-			ServerStartHTTPS(httpsHandlers, s)
+			ServerStartHTTPS(httpsHdlrs, s)
 		}()
-		ServerStartHTTP(httpHandlers, s)
+		ServerStartHTTP(httpHdlrs, s)
 	} else if GetServerUseHTTP(s) {
 		log.Println("Start http server")
-		ServerStartHTTP(httpHandlers, s)
+		ServerStartHTTP(httpHdlrs, s)
 	} else if GetServerUseHTTPS(s) {
 		log.Println("Start https server")
-		ServerStartHTTPS(httpsHandlers, s)
+		ServerStartHTTPS(httpsHdlrs, s)
 	} else {
 		log.Fatalln("Config file does not specify a listener to start")
 	}
@@ -53,7 +53,8 @@ func ServerStartHTTPS(handlers http.Handler, s Server) {
 	log.Println("Running HTTPS " + ServerHTTPSAddress(s))
 
 	// Start the HTTPS listener
-	log.Fatalln(http.ListenAndServeTLS(ServerHTTPSAddress(s), GetServerCertFile(s), GetServerKeyFile(s), handlers))
+	log.Fatalln(http.ListenAndServeTLS(ServerHTTPSAddress(s),
+		GetServerCertFile(s), GetServerKeyFile(s), handlers))
 }
 
 // ServerHTTPAddress returns the HTTP address.

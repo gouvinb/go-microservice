@@ -11,13 +11,16 @@ import (
 )
 
 var (
-	flagHostname  = flag.String("server-hostname", "", "hostname of microservice")
-	flagUseHTTP   = flag.Bool("server-dont-use-http", true, "disable http protocol")
+	flagHostname = flag.String("server-hostname", "", "hostname of microservice")
+	flagUseHTTP  = flag.Bool("server-dont-use-http", true,
+		"disable http protocol")
 	flagUseHTTPS  = flag.Bool("server-use-https", false, "enable https protocol")
 	flagHTTPPort  = flag.Int("server-http-port", -1, "http port of microservice")
-	flagHTTPSPort = flag.Int("server-https-port", -1, "https port of microservice")
-	flagCertFile  = flag.String("server-cert-file", "", "path of certificate file")
-	flagKeyFile   = flag.String("server-key-file", "", "key of certificate")
+	flagHTTPSPort = flag.Int("server-https-port", -1,
+		"https port of microservice")
+	flagCertFile = flag.String("server-cert-file", "",
+		"path of certificate file")
+	flagKeyFile = flag.String("server-key-file", "", "key of certificate")
 )
 
 // TODO: replace defaults returns with your defaults configurations
@@ -36,9 +39,10 @@ func GetServerHostname(s Server) string {
 
 // GetServerUseHTTP return the value for enable http or not.
 func GetServerUseHTTP(s Server) bool {
+	value, err := strconv.ParseBool(os.Getenv("SERVER_USE_HTTP"))
 	if *flagUseHTTP != true {
 		return *flagUseHTTP
-	} else if value, err := strconv.ParseBool(os.Getenv("SERVER_USE_HTTP")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.UseHTTP != false {
 		return s.UseHTTP
@@ -48,9 +52,10 @@ func GetServerUseHTTP(s Server) bool {
 
 // GetServerUseHTTPS return the value for enable https or not.
 func GetServerUseHTTPS(s Server) bool {
+	value, err := strconv.ParseBool(os.Getenv("SERVER_USE_HTTPS"))
 	if *flagUseHTTPS != false {
 		return *flagUseHTTPS
-	} else if value, err := strconv.ParseBool(os.Getenv("SERVER_USE_HTTPS")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.UseHTTPS != false {
 		return s.UseHTTPS
@@ -60,9 +65,10 @@ func GetServerUseHTTPS(s Server) bool {
 
 // GetServerHTTPPort return the http port used by go-microservice.
 func GetServerHTTPPort(s Server) int {
+	value, err := strconv.Atoi(os.Getenv("SERVER_HTTP_PORT"))
 	if *flagHTTPPort != -1 {
 		return *flagHTTPPort
-	} else if value, err := strconv.Atoi(os.Getenv("SERVER_HTTP_PORT")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.HTTPPort != -1 {
 		return s.HTTPPort
@@ -72,9 +78,10 @@ func GetServerHTTPPort(s Server) int {
 
 // GetServerHTTPSPort return the https port used by go-microservice.
 func GetServerHTTPSPort(s Server) int {
+	value, err := strconv.Atoi(os.Getenv("SERVER_HTTPS_PORT"))
 	if *flagHTTPSPort != -1 {
 		return *flagHTTPSPort
-	} else if value, err := strconv.Atoi(os.Getenv("SERVER_HTTPS_PORT")); err == nil {
+	} else if err == nil {
 		return value
 	} else if s.HTTPSPort != -1 {
 		return s.HTTPSPort

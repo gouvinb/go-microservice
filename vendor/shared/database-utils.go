@@ -11,14 +11,18 @@ import (
 )
 
 var (
-	flagType          = flag.String("database-type", "", "type of db (ex: bolt or mysql)")
+	flagType = flag.String("database-type", "",
+		"type of db (ex: bolt or mysql)")
 	flagName          = flag.String("database-name", "", "name of database")
-	flagBoltDirectory = flag.String("database-bolt-directory", "", "path of database file for BoltDB")
-	flagURL           = flag.String("database-url", "", "url of database")
-	flagUsername      = flag.String("database-username", "", "login of database")
-	flagPassword      = flag.String("database-password", "", "password of database if needed")
-	flagPort          = flag.Int("database-port", -1, "port used by database")
-	flagParameter     = flag.String("database-mysql-parameter", "", "parameter for mysql database")
+	flagBoltDirectory = flag.String("database-bolt-directory", "",
+		"path of database file for BoltDB")
+	flagURL      = flag.String("database-url", "", "url of database")
+	flagUsername = flag.String("database-username", "", "login of database")
+	flagPassword = flag.String("database-password", "",
+		"password of database if needed")
+	flagPort      = flag.Int("database-port", -1, "port used by database")
+	flagParameter = flag.String("database-mysql-parameter", "",
+		"parameter for mysql database")
 )
 
 // TODO: replace defaults returns with your defaults configurations
@@ -97,9 +101,10 @@ func GetDatabaseURL(d DatabaseInfo) string {
 
 // GetDatabasePort return the database port if you used an URL.
 func GetDatabasePort(d DatabaseInfo) int {
+	value, err := strconv.Atoi(os.Getenv("DATABASE_PORT"))
 	if *flagPort != -1 {
 		return *flagPort
-	} else if value, err := strconv.Atoi(os.Getenv("DATABASE_PORT")); err == nil {
+	} else if err == nil {
 		return value
 	} else if d.Port != -1 {
 		return d.Port

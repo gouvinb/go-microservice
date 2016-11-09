@@ -65,12 +65,15 @@ func DatabaseConfigure(d DatabaseInfo) {
 		}
 	case TypeBolt:
 		// Connect to Bolt
-		if BoltDB, err = bolt.Open(GetDatabaseDirectory(databases)+GetDatabaseName(databases)+".db", 0600, nil); err != nil {
+		BoltDB, err = bolt.Open(GetDatabaseDirectory(databases)+
+			GetDatabaseName(databases)+".db", 0600, nil)
+		if err != nil {
 			log.Fatalln("Bolt Driver Error", err)
 		}
 	case TypeMongoDB:
 		// Connect to MongoDB
-		if Mongo, err = mgo.DialWithTimeout(GetDatabaseURL(databases), 5*time.Second); err != nil {
+		Mongo, err = mgo.DialWithTimeout(GetDatabaseURL(databases), 5*time.Second)
+		if err != nil {
 			log.Fatalln("MongoDB Driver Error", err)
 			return
 		}
@@ -101,7 +104,8 @@ func DatabaseDNS(d DatabaseInfo) string {
 }
 
 // DatabaseBoltUpdate makes a modification to Bolt.
-func DatabaseBoltUpdate(bucketName string, key string, dataStruct interface{}) error {
+func DatabaseBoltUpdate(bucketName string, key string,
+	dataStruct interface{}) error {
 	err := BoltDB.Update(func(tx *bolt.Tx) error {
 		// Create the bucket
 		bucket, e := tx.CreateBucketIfNotExists([]byte(bucketName))
@@ -125,7 +129,8 @@ func DatabaseBoltUpdate(bucketName string, key string, dataStruct interface{}) e
 }
 
 // DatabaseBoltView retrieves a record in Bolt.
-func DatabaseBoltView(bucketName string, key string, dataStruct interface{}) error {
+func DatabaseBoltView(bucketName string, key string,
+	dataStruct interface{}) error {
 	err := BoltDB.View(func(tx *bolt.Tx) error {
 		// Get the bucket
 		b := tx.Bucket([]byte(bucketName))
