@@ -103,6 +103,13 @@ update-deps:
 	@echo "==> Update dependencies for $(PACKAGE) ..."; \
 	$(GO_DEPS_UPDATE) $(TOP_PACKAGE_DIR)/$(PACKAGE);
 
+notify:
+	@terminal-notifier -title Makefile \
+	-subtitle "Job Finished" \
+	-message "Check output" \
+	-sound default \
+	-appIcon "https://code.visualstudio.com/images/favicon.ico"
+
 # Secure command
 .PHONY: all build build-race install publish run test test-verbose clean \
 	 fclean fmt generate imports lint vet deps update-deps
