@@ -44,7 +44,7 @@ func Error404(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Error405 handles 405 - Page Not Found.
+// Error405 handles 405 - Method Not Allowed.
 func Error405(w http.ResponseWriter, r *http.Request) {
 	// Get session
 	sess := shared.SessionInstance(r)
