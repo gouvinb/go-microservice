@@ -33,7 +33,6 @@ type Session struct {
 func SessionConfigure(s Session) {
 	if IsSessionEnabled(s) {
 		Store = sessions.NewCookieStore([]byte(GetSessionSecretKey(s)))
-		Name = GetSessionName(s)
 
 		s.Options.Path = GetSessionOptionPath(s)
 		s.Options.Domain = GetSessionOptionDomain(s)
@@ -42,6 +41,8 @@ func SessionConfigure(s Session) {
 		s.Options.HttpOnly = GetSessionOptionHTTPOnly(s)
 
 		Store.Options = &s.Options
+
+		Name = GetSessionName(s)
 	}
 }
 
