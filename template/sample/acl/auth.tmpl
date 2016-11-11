@@ -1,0 +1,9 @@
+{{define "title"}}{{LINK "" "Go Web App"}} - Sample ACL{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+  <h1>{{template "title" .}} - Auth page</h1>
+	<p>Click {{LINK "sample/acl" "here"}} to go to last page.</p>
+	{{template "footer" .}}
+</div>
+{{end}}
+{{define "foot"}}{{end}}

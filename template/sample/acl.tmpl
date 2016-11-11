@@ -1,0 +1,23 @@
+{{define "title"}}{{LINK "" "Go Web App"}} - Sample ACL{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+  <h1>{{template "title" .}}</h1>
+	<h2>{{.token}} - {{.id}}</h2>
+  <h3>Get</h3>
+	<p>Click {{LINK "sample/acl/anon" "here"}} to test acl page for anonymous user.</p>
+	<p>Click {{LINK "sample/acl/auth" "here"}} to test acl page for logged user.</p>
+  <h3>Post</h3>
+	<form id="create" method="post">
+		<p>Click <input type="submit" value="Here" /> to create a logged session.</p>
+		<input type="hidden" name="token" value="{{.token}}">
+		<input type="hidden" name="session" value="true">
+	</form>
+	<form id="remove" method="post">
+		<p>Click <input type="submit" value="Here" /> to remove session.</p>
+		<input type="hidden" name="token" value="{{.token}}">
+		<input type="hidden" name="session" value="false">
+	</form>
+	{{template "footer" .}}
+</div>
+{{end}}
+{{define "foot"}}{{end}}
