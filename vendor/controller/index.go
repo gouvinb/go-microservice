@@ -6,7 +6,6 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"route/routewrapper"
 
@@ -15,8 +14,6 @@ import (
 )
 
 func init() {
-	log.Println("Init index handlers")
-
 	routewrapper.Get("/", routewrapper.Chain(Index))
 }
 

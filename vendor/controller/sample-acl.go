@@ -6,7 +6,6 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"route/routewrapper"
 
@@ -18,8 +17,6 @@ import (
 )
 
 func init() {
-	log.Println("Init sample/acl/ handlers")
-
 	routewrapper.Get("/sample/acl", routewrapper.Chain(SampleACLGET))
 	routewrapper.Post("/sample/acl", routewrapper.Chain(SampleACLPOST))
 	routewrapper.Get("/sample/acl/auth", routewrapper.Chain(SampleACLAuthGET, middleware.DisallowAnon))

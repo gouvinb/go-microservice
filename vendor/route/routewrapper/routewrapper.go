@@ -24,7 +24,7 @@ type RouteWapperInfo struct {
 }
 
 func init() {
-	log.Println("Init router")
+	// Init router
 	r.Router = httprouter.New()
 }
 
@@ -36,7 +36,6 @@ func ReadConfig() RouteWapperInfo {
 
 // Instance returns the router.
 func Instance() *httprouter.Router {
-	log.Println("Instance router called")
 	return r.Router
 }
 
@@ -48,6 +47,5 @@ func Params(r *http.Request) httprouter.Params {
 
 // Chain returns handle with chaining using Alice.
 func Chain(fn http.HandlerFunc, c ...alice.Constructor) httprouter.Handle {
-	log.Println("Chain handler with alice")
 	return Handler(alice.New(c...).ThenFunc(fn))
 }

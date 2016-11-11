@@ -6,15 +6,12 @@ package controller
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"route/routewrapper"
 	"shared"
 )
 
 func init() {
-	log.Println("Init error handlers")
-
 	// This does not work for routes where the path matches, but the method does
 	// not (on HEAD and OPTIONS need to check)
 	// https://github.com/julienschmidt/httprouter/issues/13

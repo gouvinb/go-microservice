@@ -5,7 +5,6 @@
 package middleware
 
 import (
-	"log"
 	"net/http"
 
 	"shared"
@@ -13,7 +12,6 @@ import (
 
 // DisallowAuth does not allow authenticated users to access the page.
 func DisallowAuth(h http.Handler) http.Handler {
-	log.Println("Set DisallowAuth")
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Get session
 		if sess := shared.SessionInstance(r); sess != nil {
@@ -29,7 +27,6 @@ func DisallowAuth(h http.Handler) http.Handler {
 
 // DisallowAnon does not allow anonymous users to access the page.
 func DisallowAnon(h http.Handler) http.Handler {
-	log.Println("Set DisallowAnon")
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Get session
 		if sess := shared.SessionInstance(r); sess != nil {

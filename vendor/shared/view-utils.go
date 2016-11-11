@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	flagViewBaseURI   = flag.String("view-base-uri", "", "")
+	flagViewBaseURI   = flag.String("view-base-uri", "", "base of uri for a href")
 	flagViewExtension = flag.String("view-extension", "",
 		"extension of template files")
 	flagViewFolder = flag.String("view-folder", "",

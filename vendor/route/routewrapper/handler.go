@@ -25,7 +25,6 @@ func HandlerFunc(h http.HandlerFunc) httprouter.Handle {
 // controller.Index)))
 // Source: http://nicolasmerouze.com/guide-routers-golang/
 func Handler(h http.Handler) httprouter.Handle {
-	log.Println("Handler used")
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		context.Set(r, params, p)
 		h.ServeHTTP(w, r)
