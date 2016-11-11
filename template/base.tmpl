@@ -13,7 +13,8 @@
 
     <title>{{template "title" .}}</title>
 
-    <!-- Favicons from http://realfavicongenerator.net -->
+    <!-- Favicons -->
+    <!--
     <link rel="apple-touch-icon" sizes="57x57" href="/static/favicons/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/static/favicons/apple-touch-icon-114x114.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/static/favicons/apple-touch-icon-72x72.png">
@@ -27,21 +28,37 @@
     <link rel="icon" type="image/png" href="/static/favicons/favicon-96x96.png" sizes="96x96">
     <link rel="icon" type="image/png" href="/static/favicons/favicon-16x16.png" sizes="16x16">
     <link rel="icon" type="image/png" href="/static/favicons/favicon-32x32.png" sizes="32x32">
-    <meta name="msapplication-TileColor" content="#da532c">
+    -->
+
+    <!-- MS Application -->
+    <!--
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-navbutton-color" content="#ffffff">
     <meta name="msapplication-TileImage" content="/static/favicons/mstile-144x144.png">
+    <meta name="application-name" content="Go microservice">
+    -->
+
+    <!-- Chrome Android -->
+    <!--<meta name="theme-color" content="#ffffff" />-->
+
+    <!-- Safari iOS -->
+    <!--<meta name="apple-mobile-web-app-status-bar-style" content="#ffffff">-->
 
     <!-- style.css -->
+    {{/*CSS "path of css"*/}}
 
     {{template "head" .}}
   </head>
 
-  <input id="BaseURI" type="hidden" value="{{.BaseURI}}">
-  
-  {{template "content" .}}
+  <body>
 
-  <!-- script.js -->
+    <input id="BaseURI" type="hidden" value="{{.BaseURI}}">
+     {{template "content" .}}
 
-  {{template "foot" .}}
+    <!-- script.js -->
+    {{/*JS "path of js"*/}}
+
+    {{template "foot" .}}
   </body>
 
 </html>
