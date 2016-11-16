@@ -2,121 +2,141 @@
 
 Basic microservice in Go.
 
-This projet has been used in my school to build a microservice using the Go
-language without a framework and easily in a project with an microservice
-struct. Inspired by [gowebapp](https://github.com/josephspurrier/gowebapp)
-writted by [Joseph Spurrier](http://www.josephspurrier.com/about/). it was
-written again with a goal to be adapted to docker container.
+This projet has been used in my school to build a microservice using Golang
+without a framework and with ease. Inspired by
+[gowebapp](https://github.com/josephspurrier/gowebapp)
+writted by [Joseph Spurrier](http://www.josephspurrier.com/about/). My group
+wanted this microservice to match docker container structure.
 
 To download, run the following command:
 
 ```bash
-go get -u github.com/jteeuwen/go-bindata/... # Needed for go generate
+# Prerequisites to use 'go generate' command
+go get -u github.com/jteeuwen/go-bindata/...
 go get github.com/gouvinb/go-microservice
 ```
 
 ## Prerequisites
 
-### Go 1.6 and upper version
+### Go 1.6 and lasted version
 
-This project are fully compatible.
+This project is fully compatible.
 
 ### Go 1.5
 
-You need to set GOVENDOREXPERIMENT to 1 for use vendor folder.
+You need to set `GOVENDOREXPERIMENT` to 1 to use vendor folder.
 
 ### Go 1.4 and earlier
 
-This project aren't compatible as you do not update your imports.
-
+This project isn't compatible as you do not update your imports.
 
 ## Features
 
--   Configuration for developper and production
--   Adapted for lot of database (MySQL, MariaDB, Bolt, Mongo)
+-   Configuration for developpement and production
+-   Compatible with lot of databases (MySQL, MariaDB, Bolt, Mongo...)
 
 ## Structure
 
 ```java
 .
-├── main.go
-└── vendor
-    ├── config
-    │   ├── config.go
-    │   └── config.json
-    ├── controller
-    │   ├── doc.go
-    │   └── [CONTROLLER].go
-    ├── model
-    │   ├── doc.go
-    │   └── [MODEL].go
-    ├── route
-    │   ├── middleware
-    │   │   ├── doc.go
-    │   │   └── [MIDDLEWARE].go
-    │   ├── routerwrapper
-    │   │   ├── doc.go
-    │   │   └── [ROUTERWRAPPER].go
-    │   └── route.go
-    └── shared
-        ├── doc.go
-        ├── cors.go
-        ├── database.go
-        ├── server.go
-        ├── session.go
-        └── [SHARED]-utils.go
+|-- main.go
+|-- template
+|   |-- base.tmpl
+|   |-- footer.tmpl
+|   |-- error
+|   |   `-- [CODE_ERROR].tmpl
+|   `-- [VIEW_NAME]
+|       |-- [SUB_VIEW]
+|       |   `-- [SUB_VIEW_NAME].tmpl
+|       `-- [VIEW_NAME].tmpl
+`-- vendor
+    |-- config
+    |   |-- config.go
+    |   `-- config.json
+    |-- controller
+    |   |-- doc.go
+    |   `-- [CONTROLLER].go
+    |-- model
+    |   |-- doc.go
+    |   `-- [MODEL].go
+    |-- plugin
+    |   `-- [PLUGIN].go
+    |-- route
+    |   |-- middleware
+    |   |   |--doc.go
+    |   |   `-- [MIDDLEWARE].go
+    |   |-- routewrapper
+    |   |   |-- doc.go
+    |   |   `-- [ROUTERWRAPPER].go
+    |   `-- route.go
+    |-- shared
+    |   |-- doc.go
+    |   |-- cors.go
+    |   |-- database.go
+    |   |-- server.go
+    |   |-- session.go
+    |   |-- view.go
+    |   `-- [SHARED]-utils.go
+    `-- utils
+        `-- [UTILS].go
 ```
 
 ### Main package
 
-It handles initializing the logs and load config.json throught go-bindata befor
-launch microservice.
+It will initialize the logs and load `config.json` by means of `go-bindata`
+before launch microservice.
 
 ### Config
 
 #### Go
 
-Config load a default config file (_config.json_) throught generate go-bindata.
+Config package will load a default config file (`config.json`) by means of
+generating go-bindata.
 
 #### JSON
 
-Config.json contains all environement, it needs converts into managable Go
-source code before build (_see Main.go at line 17_).
+`Config.json` contains all environement, it needs to convert Go
+source code before build into managable (_see Main.go at line 17_).
 
 **The default configuration is based on the default values from shared package.
-Please edit in primary the config.json file instead of values from shared
+You should edit at first  the `config.json` file instead of values from shared
 package.**
 
 ### Controller
 
-Package controller can send commands to the model to update the model's
-state. It can also send commands to its associated view to change the view's
-presentation of the model.
+Controller package can send commands to update the model's state and to his
+associated view to change the view's presentation of the model.
 
 ### Model
 
-Package model stores data that is retrieved according to commands from the
+Model package stores data which is retrieved according to commands from the
 controller.
 
 ### Route
 
-Package route load router for web server.
+Route package will load router for web server.
 
 #### Middleware
 
-Package middleware allows the use of http.HandlerFunc compatible funcs with
-julienschmidt/httprouter.
+Middleware package allows the use of http.HandlerFunc compatible funcs with
+`julienschmidt/httprouter`.
 
 #### RouteWrapper
 
-Package routewrapper is a wrapper for a better implementation of routes.
+Routewrapper package is a wrapper for better implementation of the routes.
 
 ### Shared
 
-Package shared contain all microservice config. Server is a wrapper around the
-net/http package that starts listeners for HTTP and HTTPS. Session provides a
-wrapper for gorilla/sessions package. Database provides an interface for
-migrating a database backwards and forwards.
+Package shared contain all microservice config :
+
+-   Cors file provides authorization for cross origin requests.
+    (Only if have no session)
+-   Database file provides an interface to manage database.
+-   Server file is a wrapper around the net/http package that starts listeners
+    for HTTP and HTTPS.
+-   Session provides a wrapper for gorilla/sessions package. (Only if cors
+    disabled)
+-   View provides an interface to display view at an user.
 
 ## Feedback
 
