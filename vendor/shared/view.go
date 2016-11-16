@@ -1,8 +1,6 @@
 package shared
 
 import (
-	"encoding/gob"
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -13,23 +11,7 @@ import (
 	"sync"
 )
 
-func init() {
-	// Magic goes here to allow serializing maps in securecookie
-	// http://golang.org/pkg/encoding/gob/#Register
-	// Source: http://stackoverflow.com/questions/21934730/gob-type-not-registered-for-interface-mapstringinterface
-	gob.Register(Flash{})
-}
-
 var (
-	// FlashError is a bootstrap class
-	FlashError = "alert-danger"
-	// FlashSuccess is a bootstrap class
-	FlashSuccess = "alert-success"
-	// FlashNotice is a bootstrap class
-	FlashNotice = "alert-info"
-	// FlashWarning is a bootstrap class
-	FlashWarning = "alert-warning"
-
 	childTemplates     []string
 	rootTemplate       string
 	templateCollection = make(map[string]*template.Template)
@@ -40,13 +22,13 @@ var (
 	viewInfo           View
 )
 
-// Template root and children
+// Template root and children.
 type Template struct {
 	Root     string   `json:"Root"`
 	Children []string `json:"Children"`
 }
 
-// View attributes
+// View attributes.
 type View struct {
 	BaseURI   string   `json:"BaseURI"`
 	Extension string   `json:"Extension"`
@@ -58,23 +40,17 @@ type View struct {
 	request   *http.Request
 }
 
-// Flash Message
-type Flash struct {
-	Message string
-	Class   string
-}
-
-// ViewConfigure sets the view information
+// ViewConfigure sets the view information.
 func ViewConfigure(vi View) {
 	viewInfo = vi
 }
 
-// ViewReadConfig returns the configuration
+// ViewReadConfig returns the configuration.
 func ViewReadConfig() View {
 	return viewInfo
 }
 
-// ViewLoadTemplates will set the root and child templates
+// ViewLoadTemplates will set the root and child templates.
 func ViewLoadTemplates(rootTemp string, childTemps []string) {
 	rootTemplate = rootTemp
 	childTemplates = childTemps
@@ -101,12 +77,12 @@ func ViewLoadPlugins(fms ...template.FuncMap) {
 	mutexPlugins.Unlock()
 }
 
-// ViewPrependBaseURI prepends the base URI to the string
+// ViewPrependBaseURI prepends the base URI to the string.
 func (v *View) ViewPrependBaseURI(s string) string {
 	return v.BaseURI + s
 }
 
-// ViewNew returns a new view
+// ViewNew returns a new view.
 func ViewNew(req *http.Request) *View {
 	v := &View{}
 	v.Vars = make(map[string]interface{})
@@ -135,8 +111,7 @@ func ViewNew(req *http.Request) *View {
 }
 
 // ViewAssetTimePath returns a URL with the proper base uri and timestamp appended.
-// Works for CSS and JS assets.
-// Determines if local or on the web
+// Works for CSS and JS assets. Determines if local or on the web.
 func (v *View) ViewAssetTimePath(s string) (string, error) {
 	if strings.HasPrefix(s, "//") {
 		return s, nil
@@ -157,7 +132,7 @@ func (v *View) ViewAssetTimePath(s string) (string, error) {
 	return v.ViewPrependBaseURI(s + "?" + time), nil
 }
 
-// ViewRenderSingle renders a template to the writer
+// ViewRenderSingle renders a template to the writer.
 func (v *View) ViewRenderSingle(w http.ResponseWriter) {
 
 	// Get the template collection from cache
@@ -205,24 +180,6 @@ func (v *View) ViewRenderSingle(w http.ResponseWriter) {
 	// Save the template collection
 	tc := templates
 
-	// Get session
-	sess := SessionInstance(v.request)
-
-	// Get the flashes for the template
-	if flashes := sess.Flashes(); len(flashes) > 0 {
-		v.Vars["flashes"] = make([]Flash, len(flashes))
-		for i, f := range flashes {
-			switch f.(type) {
-			case Flash:
-				v.Vars["flashes"].([]Flash)[i] = f.(Flash)
-			default:
-				v.Vars["flashes"].([]Flash)[i] = Flash{f.(string), "alert-box"}
-			}
-
-		}
-		sess.Save(v.request, w)
-	}
-
 	// Display the content to the screen
 	err = tc.Funcs(pc).ExecuteTemplate(w, v.Name+"."+v.Extension, v.Vars)
 
@@ -231,7 +188,7 @@ func (v *View) ViewRenderSingle(w http.ResponseWriter) {
 	}
 }
 
-// ViewRender renders a template to the writer
+// ViewRender renders a template to the writer.
 func (v *View) ViewRender(w http.ResponseWriter) {
 
 	// Get the template collection from cache
@@ -281,24 +238,6 @@ func (v *View) ViewRender(w http.ResponseWriter) {
 		tc = templates
 	}
 
-	// Get session
-	sess := SessionInstance(v.request)
-
-	// Get the flashes for the template
-	if flashes := sess.Flashes(); len(flashes) > 0 {
-		v.Vars["flashes"] = make([]Flash, len(flashes))
-		for i, f := range flashes {
-			switch f.(type) {
-			case Flash:
-				v.Vars["flashes"].([]Flash)[i] = f.(Flash)
-			default:
-				v.Vars["flashes"].([]Flash)[i] = Flash{f.(string), "alert-box"}
-			}
-
-		}
-		sess.Save(v.request, w)
-	}
-
 	// Display the content to the screen
 	err := tc.Funcs(pc).ExecuteTemplate(w, rootTemplate+"."+v.Extension, v.Vars)
 
@@ -307,7 +246,7 @@ func (v *View) ViewRender(w http.ResponseWriter) {
 	}
 }
 
-// ViewValidate returns true if all the required form values are passed
+// ViewValidate returns true if all the required form values are passed.
 func ViewValidate(req *http.Request, required []string) (bool, string) {
 	for _, v := range required {
 		if req.FormValue(v) == "" {
@@ -318,55 +257,14 @@ func ViewValidate(req *http.Request, required []string) (bool, string) {
 	return true, ""
 }
 
-// ViewSendFlashes allows retrieval of flash messages for using with Ajax
-func (v *View) ViewSendFlashes(w http.ResponseWriter) {
-	// Get session
-	sess := SessionInstance(v.request)
-
-	flashes := viewPeekFlashes(w, v.request)
-	sess.Save(v.request, w)
-
-	js, err := json.Marshal(flashes)
-	if err != nil {
-		http.Error(w, "JSON Error: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
-}
-
-func viewPeekFlashes(w http.ResponseWriter, r *http.Request) []Flash {
-	// Get session
-	sess := SessionInstance(r)
-
-	var v []Flash
-
-	// Get the flashes for the template
-	if flashes := sess.Flashes(); len(flashes) > 0 {
-		v = make([]Flash, len(flashes))
-		for i, f := range flashes {
-			switch f.(type) {
-			case Flash:
-				v[i] = f.(Flash)
-			default:
-				v[i] = Flash{f.(string), "alert-box"}
-			}
-
-		}
-	}
-
-	return v
-}
-
-// ViewRepopulate updates the dst map so the form fields can be refilled
+// ViewRepopulate updates the dst map so the form fields can be refilled.
 func ViewRepopulate(list []string, src url.Values, dst map[string]interface{}) {
 	for _, v := range list {
 		dst[v] = src.Get(v)
 	}
 }
 
-// ViewFileTime returns the modification time of the file
+// ViewFileTime returns the modification time of the file.
 func ViewFileTime(name string) (string, error) {
 	fi, err := os.Stat(name)
 	if err != nil {
