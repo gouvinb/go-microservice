@@ -15,7 +15,7 @@ import (
 	"shared"
 )
 
-//go:generate go-bindata -pkg config -o vendor/config/bindata.go vendor/config/...
+//go:generate go-bindata -pkg config -o vendor/config/bindata.go vendor/config/config.json
 
 func init() {
 	// Verbose logging with file name and line number
@@ -28,10 +28,10 @@ func main() {
 
 	log.Println("Start microservice")
 
+	log.Println("Load the configuration file")
 	// config the settings variable
 	var cfg = config.NewConfiguration()
 
-	log.Println("Load the configuration file")
 	configFile, err := config.Asset("vendor/config/config.json")
 	if err != nil {
 		log.Fatalln(err)
@@ -47,7 +47,7 @@ func main() {
 		log.Println("Configure and connect database")
 		shared.DatabaseConfigure(cfg.Database)
 
-		// Setup the views
+		log.Println("Setup the views")
 		shared.ViewConfigure(cfg.View)
 		shared.ViewLoadTemplates(shared.GetTemplateRoot(cfg.View.Template),
 			shared.GetTemplateChildren(cfg.View.Template))
