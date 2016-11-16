@@ -1,3 +1,7 @@
+// Copyright 2016 gouvinb. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE.md file.
+
 package shared
 
 import (
@@ -24,7 +28,7 @@ func init() {
 		"set all childrens template")
 }
 
-// GetViewBaseURI return the base URI
+// GetViewBaseURI return the base URI.
 func GetViewBaseURI(v View) string {
 	if *flagViewBaseURI != "" {
 		return *flagViewBaseURI
@@ -36,7 +40,7 @@ func GetViewBaseURI(v View) string {
 	return ""
 }
 
-// GetViewExtension return the extension file string
+// GetViewExtension return the extension file string.
 func GetViewExtension(v View) string {
 	if *flagViewExtension != "" {
 		return *flagViewExtension
@@ -48,7 +52,7 @@ func GetViewExtension(v View) string {
 	return ""
 }
 
-// GetViewFolder return the name folder
+// GetViewFolder return the name folder.
 func GetViewFolder(v View) string {
 	if *flagViewFolder != "" {
 		return *flagViewFolder
@@ -60,7 +64,7 @@ func GetViewFolder(v View) string {
 	return ""
 }
 
-// GetViewName return name of the view
+// GetViewName return name of the view.
 func GetViewName(v View) string {
 	if *flagViewName != "" {
 		return *flagViewName
@@ -72,7 +76,7 @@ func GetViewName(v View) string {
 	return ""
 }
 
-// IsViewCaching return true if use cache for view
+// IsViewCaching return true if use cache for view.
 func IsViewCaching(v View) bool {
 	value, err := strconv.ParseBool(os.Getenv("VIEW_CACHING"))
 	if *flagViewCaching != false {
@@ -85,7 +89,7 @@ func IsViewCaching(v View) bool {
 	return false
 }
 
-// GetTemplateRoot return the name of root template
+// GetTemplateRoot return the name of root template.
 func GetTemplateRoot(t Template) string {
 	if *flagTemplateRoot != "" {
 		return *flagTemplateRoot
@@ -97,7 +101,7 @@ func GetTemplateRoot(t Template) string {
 	return ""
 }
 
-// GetTemplateChildren all names of childrens template
+// GetTemplateChildren all names of childrens template.
 func GetTemplateChildren(t Template) utils.StringSlice {
 	if len(flagTemplateChildren) > 0 {
 		return flagTemplateChildren

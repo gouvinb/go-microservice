@@ -1,3 +1,7 @@
+// Copyright 2016 gouvinb. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE.md file.
+
 package plugin
 
 import (
@@ -6,7 +10,7 @@ import (
 	"shared"
 )
 
-// TagHelper returns a template.FuncMap
+// TagHelper returns a template.FuncMap.
 // * JS returns JavaScript tag
 // * CSS returns stylesheet tag
 // * LINK returns hyperlink tag

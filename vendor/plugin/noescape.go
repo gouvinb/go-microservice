@@ -1,3 +1,7 @@
+// Copyright 2016 gouvinb. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE.md file.
+
 package plugin
 
 import (
@@ -5,7 +9,7 @@ import (
 )
 
 // NoEscape returns a template.FuncMap
-// * NOESCAPE prevents escaping variable
+// * NOESCAPE prevents escaping variable.
 func NoEscape() template.FuncMap {
 	f := make(template.FuncMap)
 
