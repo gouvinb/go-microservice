@@ -1,0 +1,12 @@
+language: go
+
+go:
+  - master
+
+go_import_path: github.com/gouvinb/go-microservice
+
+install:
+  - go get -u github.com/alecthomas/gometalinter
+  - gometalinter --install
+
+script: go test ./...
