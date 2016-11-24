@@ -6,6 +6,7 @@ package controller
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"route/routewrapper"
 
@@ -57,7 +58,7 @@ func SampleACLPOST(w http.ResponseWriter, r *http.Request) {
 		shared.SessionEmpty(sess)
 		if sessionValue == "true" {
 			sess.Values["id"] = "1337" // or id of user
-			sess.Save(r, w)
+			log.Println(sess.Save(r, w).Error())
 		} else if sessionValue == "false" {
 			sess.Save(r, w)
 		}
