@@ -9,4 +9,4 @@ install:
   - go get -u github.com/alecthomas/gometalinter
   - gometalinter --install
 
-script: go test ./...
+script: make test
