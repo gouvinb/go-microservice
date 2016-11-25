@@ -1,7 +1,5 @@
 #!/usr/bin/groovy
-
- node ('linux'){
-
+node ('linux') {
   stage 'checkout code'
   checkout scm
   env
@@ -13,5 +11,4 @@
 
   stage 'test'
   sh 'docker run --rm -v $(pwd):/go/src/github.com/gouvinb/go-microservice golang:latest go test github.com/gouvinb/go-microservice'
-
 }
