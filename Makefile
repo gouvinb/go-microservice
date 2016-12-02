@@ -16,7 +16,7 @@ GO_FMT					=	$(GO_CMD) fmt
 GO_GENERATE			=	$(GO_CMD) generate
 GO_IMPORTS			=	goimports
 GO_INSTALL			=	$(GO_CMD) install -v
-GO_LINT					=	gometalinter --min-confidence=0.3
+GO_LINT					=	golint --min_confidence=0.3
 GO_RUN					=	$(GO_CMD) run
 GO_TEST					=	$(GO_CMD) test
 GO_TEST_VERBOSE	=	$(GO_CMD) test -v
