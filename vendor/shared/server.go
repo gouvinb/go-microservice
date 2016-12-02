@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"route"
 )
 
 // Server stores the hostname and port number.
@@ -34,6 +35,7 @@ func ServerRun(httpHdlrs http.Handler, httpsHdlrs http.Handler, s Server) {
 		ServerStartHTTP(httpHdlrs, s)
 	} else if GetServerUseHTTPS(s) {
 		log.Println("Start https server")
+		httpHdlrs = route.LoadHTTP(true)
 		ServerStartHTTPS(httpsHdlrs, s)
 	} else {
 		log.Fatalln("Config file does not specify a listener to start")
