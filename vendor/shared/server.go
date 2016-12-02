@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"route"
 )
 
 // Server stores the hostname and port number.
@@ -23,7 +22,7 @@ type Server struct {
 }
 
 // ServerRun starts the HTTP and/or HTTPS listener.
-func ServerRun(httpHdlrs http.Handler, httpsHdlrs http.Handler, s Server) {
+func ServerRun(httpHdlrs http.Handler, httpsHdlrs http.Handler, redirect http.Handler, s Server) {
 	if GetServerUseHTTP(s) && GetServerUseHTTPS(s) {
 		log.Println("Start https and http server")
 		go func() {
@@ -35,8 +34,10 @@ func ServerRun(httpHdlrs http.Handler, httpsHdlrs http.Handler, s Server) {
 		ServerStartHTTP(httpHdlrs, s)
 	} else if GetServerUseHTTPS(s) {
 		log.Println("Start https server")
-		httpHdlrs = route.LoadHTTP(true)
-		ServerStartHTTPS(httpsHdlrs, s)
+		go func() {
+			ServerStartHTTPS(httpsHdlrs, s)
+		}()
+		ServerStartHTTP(redirect, s)
 	} else {
 		log.Fatalln("Config file does not specify a listener to start")
 	}

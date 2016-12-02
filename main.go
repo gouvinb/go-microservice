@@ -54,6 +54,6 @@ func main() {
 		shared.ViewLoadPlugins(plugin.TagHelper(cfg.View), plugin.NoEscape())
 
 		log.Println("Start server")
-		shared.ServerRun(route.LoadHTTP(false), route.LoadHTTPS(), cfg.Server)
+		shared.ServerRun(route.LoadHTTP(false), route.LoadHTTPS(), route.LoadHTTP(true), cfg.Server)
 	}
 }

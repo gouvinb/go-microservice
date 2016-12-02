@@ -35,6 +35,7 @@ func LoadHTTP(redirect bool) http.Handler {
 	log.Println("Load HTTP handlers")
 
 	if redirect {
+		log.Println(redirect)
 		return http.HandlerFunc(redirectToHTTPS)
 	}
 	return middlewareHandler(routewrapper.Instance())
