@@ -1,0 +1,15 @@
+---
+sudo: false
+language: go
+go:
+  - master
+notifications:
+  slack:
+    secure: z9H9lctkKtfWSSpOoqxXtSiXf6tdLrIn88lFNg9wEiQDOQVjqKNzd99kqBmUJTiWV8JFx03UfT1kYbhiwDR8HPRtb5C3Tp4EZhOSuATu/5ZmVVTshEmjwQ00Q0b06Fzzgf9yWAuLoIwx/GxihmLYxrFBqYCgyA8JOidihzq9BKWB8ARyaq/xSTaY/x4RsmBBmxz2yOAMKiyy4X/oYHY585cSkSTpHvP0LRdhE6k3L0nDrLDh0GfZ1JzFAiKLmGXec84MiMBz+tXafLXNY38gdCXNjN76qB+3eb7fhrG0sO7SBGzwwlG5Lax9ZLElM0cDiJ9e4NQKPv4IAIiid2ivB6KI6VKbcyFNApu/p0AL/9+dCx1QEeFe5e/6coSq3wZ3wF4Ywnxo02BWDv+kHxz4EAasTpFUv8yo2jP9E7STUmuNDyM3Gwc7C9GWsJU5/VoXrlQM24uZBaLGLd9jzcX+97XK9jmTlKqZcfjzQlcvVDs6hWydtg2eOqc9MrBpxipkVsEOPRc9Ypr1LSZn4zVgbZhHdYe1jaDV8epgtnVr80/S7ZLYV8ge3GaSppS7pX06plVIKN74s13rwuAvS5uw2kk2n8dJkrcxKO1fAG7pTKv4WDQqjDFxxGUuDg82m67UIRcSnW6qIkJqcsF5EZRp/R4j9Wq398uUqByxQaWJTi4=
+go_import_path: github.com/gouvinb/go-microservice
+install:
+  - go get -u github.com/jteeuwen/go-bindata/...
+  - go get -u github.com/alecthomas/gometalinter
+  - gometalinter --install
+script: make deps test
+...
