@@ -1,4 +1,3 @@
----
 sudo: false
 language: go
 go:
@@ -6,11 +5,10 @@ go:
 notifications:
   email: false
   slack:
-    secure: z9H9lctkKtfWSSpOoqxXtSiXf6tdLrIn88lFNg9wEiQDOQVjqKNzd99kqBmUJTiWV8JFx03UfT1kYbhiwDR8HPRtb5C3Tp4EZhOSuATu/5ZmVVTshEmjwQ00Q0b06Fzzgf9yWAuLoIwx/GxihmLYxrFBqYCgyA8JOidihzq9BKWB8ARyaq/xSTaY/x4RsmBBmxz2yOAMKiyy4X/oYHY585cSkSTpHvP0LRdhE6k3L0nDrLDh0GfZ1JzFAiKLmGXec84MiMBz+tXafLXNY38gdCXNjN76qB+3eb7fhrG0sO7SBGzwwlG5Lax9ZLElM0cDiJ9e4NQKPv4IAIiid2ivB6KI6VKbcyFNApu/p0AL/9+dCx1QEeFe5e/6coSq3wZ3wF4Ywnxo02BWDv+kHxz4EAasTpFUv8yo2jP9E7STUmuNDyM3Gwc7C9GWsJU5/VoXrlQM24uZBaLGLd9jzcX+97XK9jmTlKqZcfjzQlcvVDs6hWydtg2eOqc9MrBpxipkVsEOPRc9Ypr1LSZn4zVgbZhHdYe1jaDV8epgtnVr80/S7ZLYV8ge3GaSppS7pX06plVIKN74s13rwuAvS5uw2kk2n8dJkrcxKO1fAG7pTKv4WDQqjDFxxGUuDg82m67UIRcSnW6qIkJqcsF5EZRp/R4j9Wq398uUqByxQaWJTi4=
+    secure: w0HbZpT+lmOeF9oEml8pV2Ognsnbf8ZdZ7elxZARvGSkEcHCxm1u+ytkn8ycMlL0AZ9xXuZCLOtYfCeOLRBp5libHdf3PE8CbRyWJy2KQ7rTYN/OTH6rbcONw5O6pof141XaZP4lD5OQePHuNeHghYNSOAq4g24dQ7hiMfxdwOMlairTjeccjVYXElaSpJrHP4IednkJVgk4d5AIrwgsRAph/wF1LYRdYPun7DEP1FYZtE4hEzkuwF7lkJ79wRtMKQd9m21LVSOu4czFuw5jPuHnNe01H/MdWFAz4q3m9qN6klOORBDIGO536iL7JMasdX90vUR0K6QN4icYgUbTL7F1Zz7tRML3xAzcY5+y9F9bigkSs3DzJ/JG/l1khPRM15I/sN5poxUQukBJi6+prkSx51E/BEgp/oMGtg55iRJo+s5hB6Y0gKs5hykF9nxKP/vXfMGeoquDTc7bpRlmNUed+Ifu0BC2fgOSgYVbuoBkTFel1aiviFptsVekxVMCp1f2PbGdzuQ+t7IvMXsgfrcJLPY1x2hEc12N4oF6KhyjBBa1ATjVjQCsBLF+ZQCZONAt8MF0uCzBiN6u9H15MCGI87PWIkSf22vjfIKduFyvcHsfIc8Ub+bTCHO6oOaKPvTFTv3FVd4XkV6WonrSEz5GKQyx3YR16ppgusV4EVI=
 go_import_path: github.com/gouvinb/go-microservice
 install:
   - go get -u github.com/jteeuwen/go-bindata/...
   - go get golang.org/x/tools/cmd/goimports
   - go get -u github.com/golang/lint/golint
 script: make deps test
-...
